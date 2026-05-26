@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOptions = {
-    origin:'http://localhost:5173',
+    origin:['http://localhost:5173', 'https://job-portal-delta-coral.vercel.app'],
     credentials:true
 }
 
@@ -27,6 +27,9 @@ const PORT = process.env.PORT || 3000;
 
 
 // api's
+app.get("/", (req, res) => {
+    return res.status(200).send("Job Portal Backend Running Successfully");
+});
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
