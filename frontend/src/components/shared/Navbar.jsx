@@ -29,25 +29,28 @@ const Navbar = () => {
         }
     }
     return (
-        <div className='bg-white'>
-            <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
+        <div className='bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100'>
+            <div className='flex items-center justify-between mx-auto max-w-7xl h-20 px-4'>
                 <div>
-                    <h1 className='text-2xl font-bold'>Job<span className='text-[#F83002]'>Portal</span></h1>
+                    <h1 className='text-3xl font-black tracking-tighter text-slate-900'>
+                        Job<span className='text-indigo-600'>Portal</span>
+                        <span className='text-[10px] bg-indigo-100 text-indigo-600 px-1.5 py-0.5 rounded-full ml-1 align-top font-bold uppercase'>AI</span>
+                    </h1>
                 </div>
-                <div className='flex items-center gap-12'>
-                    <ul className='flex font-medium items-center gap-5'>
+                <div className='flex items-center gap-10'>
+                    <ul className='flex font-bold items-center gap-8 text-slate-600 text-sm uppercase tracking-widest'>
                         {
                             user && user.role === 'recruiter' ? (
                                 <>
-                                    <li><Link to="/admin/companies">Companies</Link></li>
-                                    <li><Link to="/admin/jobs">Jobs</Link></li>
+                                    <li className='hover:text-indigo-600 transition-colors'><Link to="/admin/companies">Companies</Link></li>
+                                    <li className='hover:text-indigo-600 transition-colors'><Link to="/admin/jobs">Jobs</Link></li>
                                 </>
                             ) : (
                                 <>
-                                    <li><Link to="/">Home</Link></li>
-                                    <li><Link to="/jobs">Jobs</Link></li>
-                                    <li><Link to="/browse">Browse</Link></li>
-                                    <li><Link to="/ai-tools" className="text-[#6A38C2] font-bold">AI Tools</Link></li>
+                                    <li className='hover:text-indigo-600 transition-colors'><Link to="/">Home</Link></li>
+                                    <li className='hover:text-indigo-600 transition-colors'><Link to="/jobs">Jobs</Link></li>
+                                    <li className='hover:text-indigo-600 transition-colors'><Link to="/browse">Browse</Link></li>
+                                    <li className='hover:text-indigo-600 transition-colors'><Link to="/ai-tools" className="text-indigo-600">AI Suite</Link></li>
                                 </>
                             )
                         }
@@ -56,52 +59,55 @@ const Navbar = () => {
                     </ul>
                     {
                         !user ? (
-                            <div className='flex items-center gap-2'>
-                                <Link to="/login"><Button variant="outline">Login</Button></Link>
-                                <Link to="/signup"><Button className="bg-[#6A38C2] hover:bg-[#5b30a6]">Signup</Button></Link>
+                            <div className='flex items-center gap-4'>
+                                <Link to="/login"><Button variant="ghost" className="font-bold text-slate-600 hover:text-indigo-600">Login</Button></Link>
+                                <Link to="/signup"><Button className="bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 rounded-xl px-8 font-bold">Join Now</Button></Link>
                             </div>
                         ) : (
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Avatar className="cursor-pointer">
-                                        <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                    <Avatar className="cursor-pointer h-10 w-10 border-2 border-indigo-100 shadow-sm hover:border-indigo-300 transition-all">
+                                        <AvatarImage src={user?.profile?.profilePhoto} alt="@user" />
                                     </Avatar>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-80">
-                                    <div className=''>
-                                        <div className='flex gap-2 space-y-2'>
-                                            <Avatar className="cursor-pointer">
-                                                <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                <PopoverContent className="w-80 mt-2 p-0 rounded-2xl overflow-hidden shadow-2xl border-slate-100">
+                                    <div className='bg-indigo-600 p-6 text-white'>
+                                        <div className='flex items-center gap-4'>
+                                            <Avatar className="h-12 w-12 border-2 border-white/20">
+                                                <AvatarImage src={user?.profile?.profilePhoto} />
                                             </Avatar>
                                             <div>
-                                                <h4 className='font-medium'>{user?.fullname}</h4>
-                                                <p className='text-sm text-muted-foreground'>{user?.profile?.bio}</p>
+                                                <h4 className='font-bold text-lg leading-tight'>{user?.fullname}</h4>
+                                                <p className='text-white/70 text-xs font-medium uppercase tracking-wider'>{user?.role}</p>
                                             </div>
                                         </div>
-                                        <div className='flex flex-col my-2 text-gray-600'>
+                                    </div>
+                                    <div className='p-4 bg-white'>
+                                        <div className='flex flex-col gap-1'>
                                             {
                                                 user && user.role === 'student' && (
-                                                    <div className='flex w-fit items-center gap-2 cursor-pointer'>
-                                                        <User2 />
-                                                        <Button variant="link"> <Link to="/profile">View Profile</Link></Button>
-                                                    </div>
+                                                    <Link to="/profile" className='flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors text-slate-700 font-semibold group'>
+                                                        <User2 className='h-5 w-5 text-indigo-500 group-hover:scale-110 transition-transform' />
+                                                        <span>My Profile</span>
+                                                    </Link>
                                                 )
                                             }
 
-                                            <div className='flex w-fit items-center gap-2 cursor-pointer'>
-                                                <LogOut />
-                                                <Button onClick={logoutHandler} variant="link">Logout</Button>
-                                            </div>
+                                            <button 
+                                                onClick={logoutHandler}
+                                                className='flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 transition-colors text-red-600 font-semibold group w-full text-left'
+                                            >
+                                                <LogOut className='h-5 w-5 group-hover:scale-110 transition-transform' />
+                                                <span>Logout</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </PopoverContent>
                             </Popover>
                         )
                     }
-
                 </div>
             </div>
-
         </div>
     )
 }

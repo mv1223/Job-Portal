@@ -208,25 +208,35 @@ export const analyzeResume = async (req, res) => {
             return res.status(404).json({ message: "User not found", success: false });
         }
 
-        const userSkills = user.profile.skills || [];
-        if (userSkills.length === 0) {
-            return res.status(400).json({ message: "Please add skills to your profile first", success: false });
-        }
+        // If a file is uploaded, we'd normally parse it here.
+        // For now, we simulate analysis based on the uploaded file name and user profile.
+        const file = req.file;
+        const fileName = file ? file.originalname : "current_resume.pdf";
 
-        // Mock ATS Analysis logic
-        const commonATSKeywords = ["Project Management", "Agile", "Teamwork", "Communication", "Problem Solving", "Leadership"];
-        const foundKeywords = commonATSKeywords.filter(kw => user.profile.bio?.toLowerCase().includes(kw.toLowerCase()));
+        const userSkills = user.profile.skills || [];
         
-        const score = Math.min(100, (userSkills.length * 10) + (foundKeywords.length * 5) + 40);
+        // Mock ATS Analysis logic based on resume and profile
+        const commonATSKeywords = ["Project Management", "Agile", "Teamwork", "Communication", "Problem Solving", "Leadership", "React", "Node.js", "JavaScript", "Python", "SQL", "Cloud", "Git"];
+        const foundKeywords = commonATSKeywords.filter(kw => 
+            user.profile.bio?.toLowerCase().includes(kw.toLowerCase()) || 
+            user.profile.skills?.some(skill => skill.toLowerCase().includes(kw.toLowerCase()))
+        );
+        
+        const score = Math.min(100, (userSkills.length * 5) + (foundKeywords.length * 5) + 50);
         
         let feedback = "";
-        if (score < 60) feedback = "Consider adding more technical skills and industry keywords to your bio.";
-        else if (score < 85) feedback = "Good profile! Adding specific project achievements could boost your score.";
-        else feedback = "Excellent! Your profile is highly optimized for ATS.";
+        if (score < 60) feedback = "Your resume is missing critical industry keywords. Focus on adding technical skills relevant to your target roles.";
+        else if (score < 85) feedback = "Solid resume! To reach 90%+, quantify your achievements with metrics and add more specialized certifications.";
+        else feedback = "Outstanding! Your resume is in the top 5% of applicants for your field. It is highly optimized for modern ATS systems.";
 
         return res.status(200).json({
             success: true,
             score,
+            feedback,
+            keywordsMatched: foundKeywords,
+            fileName: fileName
+        });
+    } catch (error) {
             feedback,
             skillsAnalyzed: userSkills.length,
             keywordsMatched: foundKeywords

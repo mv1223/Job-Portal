@@ -9,7 +9,7 @@ router.route("/register").post(singleUpload,register);
 router.route("/login").post(login);
 router.route("/logout").get(logout);
 router.route("/profile/update").post(isAuthenticated,singleUpload,updateProfile);
-router.route("/analyze-resume").post(isAuthenticated, analyzeResume);
+router.route("/analyze-resume").post(isAuthenticated, singleUpload, analyzeResume);
 router.route("/job-matches").get(isAuthenticated, getJobMatches);
 
 export default router;

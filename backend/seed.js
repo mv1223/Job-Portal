@@ -32,19 +32,22 @@ const seedData = async () => {
             password: hashedPassword,
             role: "recruiter",
             profile: {
-                bio: "Connecting global talent with Fortune 500 companies.",
+                bio: "Connecting global talent with Fortune 500 companies and high-growth startups.",
                 profilePhoto: "https://github.com/shadcn.png"
             }
         });
         console.log("Recruiter created.");
 
-        // 3. Create Diverse Companies (LinkedIn/Naukri references)
+        // 3. Create Diverse Companies
         const companiesData = [
             { name: "Google", description: "Search, Cloud, AI", location: "Mountain View / Bangalore", website: "https://google.com", logo: "https://www.vectorlogo.zone/logos/google/google-icon.svg", userId: recruiter._id },
             { name: "Meta", description: "Social Media, Metaverse", location: "Menlo Park / Hyderabad", website: "https://meta.com", logo: "https://www.vectorlogo.zone/logos/facebook/facebook-icon.svg", userId: recruiter._id },
             { name: "Amazon", description: "E-commerce, AWS", location: "Seattle / Bangalore", website: "https://amazon.com", logo: "https://www.vectorlogo.zone/logos/amazon/amazon-icon.svg", userId: recruiter._id },
             { name: "Microsoft", description: "Software, Azure", location: "Redmond / Hyderabad", website: "https://microsoft.com", logo: "https://www.vectorlogo.zone/logos/microsoft/microsoft-icon.svg", userId: recruiter._id },
             { name: "NVIDIA", description: "GPUs, AI Computing", location: "Santa Clara / Pune", website: "https://nvidia.com", logo: "https://www.vectorlogo.zone/logos/nvidia/nvidia-icon.svg", userId: recruiter._id },
+            { name: "Netflix", description: "Streaming, Content", location: "Los Gatos / Remote", website: "https://netflix.com", logo: "https://www.vectorlogo.zone/logos/netflix/netflix-icon.svg", userId: recruiter._id },
+            { name: "Apple", description: "Hardware, Software", location: "Cupertino / Bangalore", website: "https://apple.com", logo: "https://www.vectorlogo.zone/logos/apple/apple-icon.svg", userId: recruiter._id },
+            { name: "Uber", description: "Mobility, Delivery", location: "San Francisco / Bangalore", website: "https://uber.com", logo: "https://www.vectorlogo.zone/logos/uber/uber-icon.svg", userId: recruiter._id },
             { name: "TCS", description: "IT Services", location: "Mumbai / Chennai", website: "https://tcs.com", logo: "https://www.vectorlogo.zone/logos/tata/tata-icon.svg", userId: recruiter._id },
             { name: "Infosys", description: "Global Consulting & IT", location: "Bangalore / Mysore", website: "https://infosys.com", logo: "https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg", userId: recruiter._id },
             { name: "Swiggy", description: "Food Delivery & Instamart", location: "Bangalore / Remote", website: "https://swiggy.com", logo: "https://upload.wikimedia.org/wikipedia/en/1/12/Swiggy_logo.svg", userId: recruiter._id },
@@ -55,80 +58,122 @@ const seedData = async () => {
         const companyMap = {};
         createdCompanies.forEach(c => companyMap[c.name] = c._id);
 
-        // 4. Massive Job List (50+ Jobs including Internships)
+        // 4. Massive Job List (80+ Jobs including Internships, Freelance, Contract)
         const jobs = [];
 
-        // Google Jobs
-        jobs.push(
-            { title: "Software Engineer - Google Cloud", description: "Build scalable cloud infra.", requirements: ["Java", "Go", "Cloud"], salary: 45, location: "Bangalore", jobType: "Full Time", experienceLevel: 3, position: 10, company: companyMap["Google"], created_by: recruiter._id },
-            { title: "SDE Intern (Summer 2026)", description: "University student internship.", requirements: ["DS", "Algorithms", "C++"], salary: 8, location: "Bangalore", jobType: "Internship", experienceLevel: 0, position: 20, company: companyMap["Google"], created_by: recruiter._id }
-        );
+        // --- REALISTIC INTERNSHIPS ---
+        const internships = [
+            { title: "Software Engineering Intern", company: "Google", location: "Bangalore", salary: 8, requirements: ["Data Structures", "Algorithms", "C++", "Java"], description: "Join Google for a 12-week summer internship. Work on real-world projects that impact billions of users." },
+            { title: "Frontend Developer Intern", company: "Meta", location: "Remote", salary: 7, requirements: ["React", "JavaScript", "HTML/CSS"], description: "Help build the future of social connection. Work with our React teams on Instagram and Facebook features." },
+            { title: "Data Science Intern", company: "Amazon", location: "Hyderabad", salary: 6, requirements: ["Python", "SQL", "Statistics", "Machine Learning"], description: "Apply ML models to optimize supply chain and delivery networks at Amazon scale." },
+            { title: "UI/UX Design Intern", company: "Apple", location: "Bangalore", salary: 9, requirements: ["Figma", "Sketch", "Prototyping", "Design Thinking"], description: "Design beautiful and intuitive interfaces for next-gen iOS and macOS applications." },
+            { title: "Cybersecurity Intern", company: "Microsoft", location: "Hyderabad", salary: 5, requirements: ["Networking", "Security Fundamentals", "Python"], description: "Learn how to defend global infrastructure from advanced cyber threats at Microsoft." },
+            { title: "Product Management Intern", company: "Uber", location: "Bangalore", salary: 10, requirements: ["Analytical Thinking", "Communication", "Problem Solving"], description: "Shadow PMs and help define the roadmap for mobility features used by millions." },
+            { title: "Marketing Intern", company: "Swiggy", location: "Bangalore", salary: 4, requirements: ["Social Media", "Content Writing", "Market Research"], description: "Execute creative marketing campaigns for Swiggy's food and grocery delivery services." },
+            { title: "HR Intern", company: "Zomato", location: "Gurgaon", salary: 3, requirements: ["People Skills", "Recruitment", "Excel"], description: "Support our talent acquisition team in hiring top candidates for Zomato's engineering teams." }
+        ];
 
-        // Meta Jobs
-        jobs.push(
-            { title: "Product Designer - Instagram", description: "Design mobile experiences.", requirements: ["Figma", "UI", "UX"], salary: 38, location: "Remote", jobType: "Full Time", experienceLevel: 2, position: 5, company: companyMap["Meta"], created_by: recruiter._id },
-            { title: "Research Intern - AI", description: "LLM research.", requirements: ["PyTorch", "NLP"], salary: 10, location: "Hyderabad", jobType: "Internship", experienceLevel: 0, position: 8, company: companyMap["Meta"], created_by: recruiter._id }
-        );
+        internships.forEach(i => {
+            jobs.push({
+                ...i,
+                jobType: "Internship",
+                experienceLevel: 0,
+                position: 10,
+                company: companyMap[i.company],
+                created_by: recruiter._id
+            });
+        });
 
-        // Amazon Jobs
-        jobs.push(
-            { title: "Cloud Architect - AWS", description: "Architect cloud solutions.", requirements: ["AWS", "Terraform"], salary: 50, location: "Seattle", jobType: "Full Time", experienceLevel: 5, position: 3, company: companyMap["Amazon"], created_by: recruiter._id },
-            { title: "Applied Scientist Intern", description: "Machine learning internship.", requirements: ["ML", "Python"], salary: 9, location: "Bangalore", jobType: "Internship", experienceLevel: 0, position: 12, company: companyMap["Amazon"], created_by: recruiter._id }
-        );
+        // --- REALISTIC FREELANCE / CONTRACT ---
+        const freelanceJobs = [
+            { title: "Freelance React Developer", company: "Netflix", location: "Remote", salary: 25, requirements: ["React", "Redux", "Tailwind CSS"], description: "Short-term project to build a custom internal dashboard for content analytics." },
+            { title: "Contract Backend Engineer", company: "Uber", location: "Remote", salary: 30, requirements: ["Node.js", "Go", "Distributed Systems"], description: "6-month contract to help scale our real-time tracking microservices." },
+            { title: "Freelance Technical Writer", company: "Google", location: "Remote", salary: 15, requirements: ["Technical Documentation", "API Docs", "Developer Advocacy"], description: "Create high-quality documentation for Google Cloud's new developer tools." },
+            { title: "Contract Mobile Developer", company: "Meta", location: "Remote", salary: 35, requirements: ["React Native", "Swift", "Kotlin"], description: "Help our team migrate legacy components to modern React Native architecture." },
+            { title: "Freelance Graphic Designer", company: "Apple", location: "Remote", salary: 20, requirements: ["Photoshop", "Illustrator", "Brand Identity"], description: "Design promotional materials for our upcoming retail store launches." }
+        ];
 
-        // Microsoft Jobs
-        jobs.push(
-            { title: "Backend Engineer - Azure", description: "Distributed systems.", requirements: ["C#", ".NET"], salary: 42, location: "Hyderabad", jobType: "Full Time", experienceLevel: 3, position: 6, company: companyMap["Microsoft"], created_by: recruiter._id },
-            { title: "Cybersecurity Intern", description: "Security analysis.", requirements: ["Security", "Networking"], salary: 6, location: "Hyderabad", jobType: "Internship", experienceLevel: 0, position: 4, company: companyMap["Microsoft"], created_by: recruiter._id }
-        );
+        freelanceJobs.forEach(f => {
+            jobs.push({
+                ...f,
+                jobType: "Freelance",
+                experienceLevel: 2,
+                position: 2,
+                company: companyMap[f.company],
+                created_by: recruiter._id
+            });
+        });
 
-        // TCS/Infosys (Indian Market Focus)
-        jobs.push(
-            { title: "Java Developer - TCS", description: "Enterprise app development.", requirements: ["Java", "Spring Boot"], salary: 12, location: "Mumbai", jobType: "Full Time", experienceLevel: 2, position: 15, company: companyMap["TCS"], created_by: recruiter._id },
-            { title: "React Developer - Infosys", description: "Modern web apps.", requirements: ["React", "JS"], salary: 10, location: "Chennai", jobType: "Full Time", experienceLevel: 1, position: 10, company: companyMap["Infosys"], created_by: recruiter._id },
-            { title: "Intern - Digital Services", description: "Learning tech basics.", requirements: ["Logic", "Communication"], salary: 3, location: "Mysore", jobType: "Internship", experienceLevel: 0, position: 30, company: companyMap["Infosys"], created_by: recruiter._id }
-        );
+        // --- REALISTIC FULL-TIME ROLES ---
+        const fullTimeRoles = [
+            { title: "Staff Software Engineer", company: "Google", location: "Mountain View", salary: 120, requirements: ["Distributed Systems", "L6+ Level", "System Design"], description: "Lead architectural decisions for Google Search infrastructure." },
+            { title: "Senior Data Scientist", company: "Meta", location: "Menlo Park", salary: 95, requirements: ["PyTorch", "Big Data", "PhD in CS/Stats"], description: "Develop advanced ranking algorithms for Facebook News Feed." },
+            { title: "Cloud Architect", company: "Amazon", location: "Seattle", salary: 110, requirements: ["AWS", "Infrastructure as Code", "Terraform"], description: "Design multi-region cloud architectures for Fortune 500 AWS customers." },
+            { title: "Senior Security Engineer", company: "Microsoft", location: "Redmond", salary: 90, requirements: ["Penetration Testing", "Azure Security", "C++"], description: "Secure the core Windows kernel against emerging zero-day vulnerabilities." },
+            { title: "AI/ML Specialist", company: "NVIDIA", location: "Santa Clara", salary: 130, requirements: ["CUDA", "Deep Learning", "GPU Optimization"], description: "Optimize LLM training performance on the latest H100 GPU clusters." },
+            { title: "Distributed Systems Engineer", company: "Netflix", location: "Los Gatos", salary: 105, requirements: ["Java", "Cassandra", "Microservices"], description: "Build the reliable backend services that power Netflix streaming worldwide." },
+            { title: "iOS Frameworks Engineer", company: "Apple", location: "Cupertino", salary: 100, requirements: ["Swift", "Objective-C", "Operating Systems"], description: "Work on the core frameworks that power the iOS user experience." },
+            { title: "Full Stack Lead", company: "Swiggy", location: "Bangalore", salary: 45, requirements: ["Node.js", "React", "Scalability"], description: "Lead the team building Swiggy's next-gen delivery partner app." },
+            { title: "SDE-2 (Backend)", company: "Zomato", location: "Gurgaon", salary: 40, requirements: ["Go", "Redis", "MySQL"], description: "Scale Zomato's order processing engine to handle 1M+ orders per hour." },
+            { title: "Technical Consultant", company: "Infosys", location: "London", salary: 55, requirements: ["Client Management", "ERP", "Cloud Strategy"], description: "Help European banking clients migrate their legacy systems to the cloud." },
+            { title: "Enterprise Architect", company: "TCS", location: "New York", salary: 85, requirements: ["Java EE", "Solution Architecture", "Agile"], description: "Design large-scale enterprise solutions for global insurance providers." }
+        ];
 
-        // Startups (Swiggy/Zomato)
-        jobs.push(
-            { title: "FullStack Developer - Swiggy", description: "Food tech scaling.", requirements: ["Node.js", "React"], salary: 35, location: "Bangalore", jobType: "Full Time", experienceLevel: 3, position: 5, company: companyMap["Swiggy"], created_by: recruiter._id },
-            { title: "Mobile Developer - Zomato", description: "Consumer app features.", requirements: ["Flutter", "Dart"], salary: 30, location: "Gurgaon", jobType: "Full Time", experienceLevel: 2, position: 4, company: companyMap["Zomato"], created_by: recruiter._id },
-            { title: "Operations Intern - Zomato", description: "Supply chain support.", requirements: ["Excel", "Communication"], salary: 2, location: "Gurgaon", jobType: "Internship", experienceLevel: 0, position: 15, company: companyMap["Zomato"], created_by: recruiter._id }
-        );
+        fullTimeRoles.forEach(ft => {
+            jobs.push({
+                ...ft,
+                jobType: "Full Time",
+                experienceLevel: 4,
+                position: 5,
+                company: companyMap[ft.company],
+                created_by: recruiter._id
+            });
+        });
 
-        // Remote/Contract Roles
-        jobs.push(
-            { title: "DevOps Engineer", description: "CI/CD automation.", requirements: ["Docker", "K8s"], salary: 40, location: "Remote", jobType: "Contract", experienceLevel: 4, position: 2, company: companyMap["NVIDIA"], created_by: recruiter._id },
-            { title: "Data Analyst", description: "Business insights.", requirements: ["SQL", "Tableau"], salary: 15, location: "Remote", jobType: "Part Time", experienceLevel: 2, position: 3, company: companyMap["Google"], created_by: recruiter._id }
-        );
+        // --- NEW TYPES: TEMPORARY & VOLUNTEER ---
+        const otherRoles = [
+            { title: "Temporary IT Support", company: "Infosys", location: "Bangalore", salary: 12, requirements: ["Hardware", "Windows", "Networking"], description: "3-month temporary role to assist with hardware upgrades across the campus." },
+            { title: "Volunteer Open Source Contributor", company: "Meta", location: "Remote", salary: 0, requirements: ["Git", "React", "Open Source"], description: "Volunteer role to help maintain our core open-source libraries like PyTorch and React." }
+        ];
 
-        // Add 20 more generic jobs for scale
-        const titles = ["QA Engineer", "Project Manager", "HR Specialist", "Marketing Intern", "System Admin", "Sales Lead", "UX Researcher", "Support Engineer"];
-        const locations = ["Delhi NCR", "Pune", "Mumbai", "Remote", "Bangalore"];
-        const jobTypes = ["Full Time", "Internship", "Part Time"];
+        otherRoles.forEach(o => {
+            jobs.push({
+                ...o,
+                jobType: o.title.includes("Temporary") ? "Temporary" : "Volunteer",
+                experienceLevel: 1,
+                position: 5,
+                company: companyMap[o.company],
+                created_by: recruiter._id
+            });
+        });
+
+        // --- ADDING VARIETY (60 more jobs) ---
+        const genericTitles = ["QA Automation Engineer", "DevOps Specialist", "System Administrator", "Data Analyst", "Blockchain Developer", "SRE Engineer", "Security Analyst", "Marketing Manager", "HR Specialist", "Business Analyst"];
+        const genericLocations = ["Delhi NCR", "Pune", "Mumbai", "Remote", "Bangalore", "Hyderabad", "Chennai", "Gurgaon", "Noida", "Kolkata"];
+        const genericJobTypes = ["Full Time", "Internship", "Part Time", "Freelance", "Contract", "Temporary", "Volunteer"];
         
-        for (let i = 0; i < 20; i++) {
-            const randomTitle = titles[Math.floor(Math.random() * titles.length)];
-            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
-            const randomJobType = jobTypes[Math.floor(Math.random() * jobTypes.length)];
+        for (let i = 0; i < 60; i++) {
+            const randomTitle = genericTitles[Math.floor(Math.random() * genericTitles.length)];
+            const randomLocation = genericLocations[Math.floor(Math.random() * genericLocations.length)];
+            const randomJobType = genericJobTypes[Math.floor(Math.random() * genericJobTypes.length)];
             const randomCompany = createdCompanies[Math.floor(Math.random() * createdCompanies.length)];
 
             jobs.push({
                 title: `${randomTitle} - ${randomCompany.name}`,
-                description: `Dynamic role at ${randomCompany.name}. Apply now to join our global team.`,
-                requirements: ["Teamwork", "Problem Solving", "Growth Mindset"],
-                salary: Math.floor(Math.random() * 40) + 5,
+                description: `Dynamic and challenging role at ${randomCompany.name}. Join our fast-paced team and help us build the future of ${randomCompany.description}.`,
+                requirements: ["Problem Solving", "Team Collaboration", "Growth Mindset", "Strong Communication"],
+                salary: Math.floor(Math.random() * 50) + 5,
                 location: randomLocation,
                 jobType: randomJobType,
-                experienceLevel: Math.floor(Math.random() * 5),
-                position: Math.floor(Math.random() * 10) + 1,
+                experienceLevel: Math.floor(Math.random() * 6),
+                position: Math.floor(Math.random() * 15) + 1,
                 company: randomCompany._id,
                 created_by: recruiter._id
             });
         }
 
         await Job.insertMany(jobs);
-        console.log(`Successfully seeded ${jobs.length} jobs.`);
+        console.log(`Successfully seeded ${jobs.length} realistic jobs.`);
 
         console.log("Seeding completed successfully!");
         process.exit();
