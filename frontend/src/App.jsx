@@ -14,6 +14,7 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import AiTools from './components/AiTools'
 
 
 const appRouter = createBrowserRouter([
@@ -32,6 +33,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/jobs",
     element: <Jobs />
+  },
+  {
+    path: "/ai-tools",
+    element: <AiTools />
   },
   {
     path: "/description/:id",

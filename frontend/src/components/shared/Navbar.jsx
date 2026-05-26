@@ -47,6 +47,7 @@ const Navbar = () => {
                                     <li><Link to="/">Home</Link></li>
                                     <li><Link to="/jobs">Jobs</Link></li>
                                     <li><Link to="/browse">Browse</Link></li>
+                                    <li><Link to="/ai-tools" className="text-[#6A38C2] font-bold">AI Tools</Link></li>
                                 </>
                             )
                         }
