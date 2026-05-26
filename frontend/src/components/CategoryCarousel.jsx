@@ -24,17 +24,17 @@ const CategoryCarousel = () => {
 
     return (
         <div className='my-20 max-w-7xl mx-auto px-4'>
-            <div className='flex items-center justify-between mb-10'>
-                <div>
-                    <h2 className='text-3xl font-black text-slate-900'>Explore by <span className='text-indigo-600'>Category</span></h2>
-                    <p className='text-slate-500 font-medium mt-1'>Find your specialty among 1,000+ active listings</p>
-                </div>
-                <div className='flex gap-2'>
-                    <CarouselPrevious className="static translate-y-0 h-10 w-10 border-slate-200 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" />
-                    <CarouselNext className="static translate-y-0 h-10 w-10 border-slate-200 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" />
-                </div>
-            </div>
             <Carousel className="w-full">
+                <div className='flex items-center justify-between mb-10'>
+                    <div>
+                        <h2 className='text-3xl font-black text-slate-900'>Explore by <span className='text-indigo-600'>Category</span></h2>
+                        <p className='text-slate-500 font-medium mt-1'>Find your specialty among 1,000+ active listings</p>
+                    </div>
+                    <div className='flex gap-2'>
+                        <CarouselPrevious className="static translate-y-0 h-10 w-10 border-slate-200 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" />
+                        <CarouselNext className="static translate-y-0 h-10 w-10 border-slate-200 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" />
+                    </div>
+                </div>
                 <CarouselContent className="-ml-4">
                     {
                         category.map((cat, index) => (
