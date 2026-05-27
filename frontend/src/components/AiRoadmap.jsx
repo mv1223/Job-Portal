@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './shared/Navbar';
+import Footer from './shared/Footer';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { motion, AnimatePresence } from 'framer-motion';

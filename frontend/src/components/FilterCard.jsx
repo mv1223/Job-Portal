@@ -7,7 +7,11 @@ import { setSearchedQuery } from '@/redux/jobSlice'
 const fitlerData = [
     {
         fitlerType: "Job Type",
-        array: ["Full-time", "Remote", "Part-time", "Contract", "Internship"]
+        array: ["Full-time", "Remote", "Part-time", "Contract", "Internship", "Freelance"]
+    },
+    {
+        fitlerType: "Work Mode",
+        array: ["Online", "Offline", "Hybrid"]
     },
     {
         fitlerType: "Experience Level",
