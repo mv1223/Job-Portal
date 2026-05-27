@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
-import { RadioGroup } from '../ui/radio-group'
 import { Button } from '../ui/button'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLoading } from '@/redux/authSlice'
-import { Loader2, UserPlus, ShieldCheck, Rocket, Search, Briefcase, Trophy, Clock } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { setLoading, setUser } from '@/redux/authSlice'
+import { Loader2 } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-const Signup = () => {
+const Auth = () => {
+    const location = useLocation();
+    const isLoginPath = location.pathname === '/login';
+    const [isLogin, setIsLogin] = useState(isLoginPath);
+    
     const [input, setInput] = useState({
         fullname: "",
         email: "",
@@ -21,9 +24,14 @@ const Signup = () => {
         password: "",
         role: ""
     });
-    const {loading,user} = useSelector(store=>store.auth);
+    
+    const { loading, user } = useSelector(store => store.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setIsLogin(location.pathname === '/login');
+    }, [location.pathname]);
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -32,34 +40,51 @@ const Signup = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         
-        if (!input.fullname || !input.email || !input.phoneNumber || !input.password || !input.role) {
-            toast.error("All fields are required");
-            return;
+        if (isLogin) {
+            if (!input.email || !input.password || !input.role) {
+                toast.error("All fields are required");
+                return;
+            }
+        } else {
+            if (!input.fullname || !input.email || !input.phoneNumber || !input.password || !input.role) {
+                toast.error("All fields are required");
+                return;
+            }
         }
 
         try {
             dispatch(setLoading(true));
-            const res = await axios.post(`${USER_API_END_POINT}/register`, input, {
+            const endpoint = isLogin ? `${USER_API_END_POINT}/login` : `${USER_API_END_POINT}/register`;
+            const payload = isLogin ? { email: input.email, password: input.password, role: input.role } : input;
+            
+            const res = await axios.post(endpoint, payload, {
                 headers: { 'Content-Type': "application/json" },
                 withCredentials: true,
             });
+
             if (res.data.success) {
-                navigate("/login");
+                if (isLogin) {
+                    dispatch(setUser(res.data.user));
+                    navigate("/");
+                } else {
+                    setIsLogin(true);
+                    navigate("/login");
+                }
                 toast.success(res.data.message);
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response?.data?.message || "Registration failed");
+            toast.error(error.response?.data?.message || (isLogin ? "Login failed" : "Registration failed"));
         } finally {
             dispatch(setLoading(false));
         }
     }
 
-    useEffect(()=>{
-        if(user){
+    useEffect(() => {
+        if (user) {
             navigate("/");
         }
-    },[])
+    }, [user, navigate]);
 
     return (
         <div className='bg-[#0a0a0a] min-h-screen flex flex-col selection:bg-primary selection:text-white'>
@@ -78,12 +103,20 @@ const Signup = () => {
                         transition={{ duration: 1 }}
                         className='text-center text-white relative z-10'
                     >
-                        <h2 className='text-6xl font-bold mb-6 tracking-tighter leading-tight'>Find work that<br />actually <em className='not-italic text-primary'>fits you</em></h2>
-                        <p className='text-lg text-[#666] font-medium max-w-md mx-auto leading-relaxed'>Create your account and join 1.4M+ candidates who have found their dream roles through HireSync.</p>
+                        <h2 className='text-6xl font-bold mb-6 tracking-tighter leading-tight'>
+                            {isLogin ? "Welcome Back to" : "Find work that"}<br />
+                            {isLogin ? <em className='not-italic text-primary'>HireSync</em> : <>actually <em className='not-italic text-primary'>fits you</em></>}
+                        </h2>
+                        <p className='text-lg text-[#666] font-medium max-w-md mx-auto leading-relaxed'>
+                            {isLogin 
+                                ? "Continue your professional journey with our neural-matching intelligence." 
+                                : "Create your account and join 1.4M+ candidates who have found their dream roles through HireSync."
+                            }
+                        </p>
                     </motion.div>
                 </div>
 
-                {/* Right Side: Signup Form */}
+                {/* Right Side: Auth Form */}
                 <div className='w-full lg:w-1/2 flex items-center justify-center p-8 md:p-20 bg-[#0a0a0a]'>
                     <motion.div 
                         initial={{ opacity: 0, x: 20 }}
@@ -92,24 +125,37 @@ const Signup = () => {
                         className='w-full max-w-md'
                     >
                         <div className='mb-12'>
-                            <h3 className='text-4xl font-bold text-white mb-2 tracking-tighter'>Create Account</h3>
-                            <p className='text-[#555] font-medium'>Join our community of professionals.</p>
+                            <h3 className='text-4xl font-bold text-white mb-2 tracking-tighter'>
+                                {isLogin ? "Sign In" : "Create Account"}
+                            </h3>
+                            <p className='text-[#555] font-medium'>
+                                {isLogin ? "Access your dashboard and applications." : "Join our community of professionals."}
+                            </p>
                         </div>
 
                         <form onSubmit={submitHandler} className='space-y-6'>
-                            <div className='space-y-2'>
-                                <Label className="text-[#888] text-[13px] font-medium uppercase tracking-widest">Full Name</Label>
-                                <Input
-                                    type="text"
-                                    value={input.fullname}
-                                    name="fullname"
-                                    onChange={changeEventHandler}
-                                    placeholder="John Doe"
-                                    className="bg-[#111] border-[#2a2a2a] h-12 px-6 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
-                                />
-                            </div>
+                            <AnimatePresence mode='wait'>
+                                {!isLogin && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className='space-y-2'
+                                    >
+                                        <Label className="text-[#888] text-[13px] font-medium uppercase tracking-widest">Full Name</Label>
+                                        <Input
+                                            type="text"
+                                            value={input.fullname}
+                                            name="fullname"
+                                            onChange={changeEventHandler}
+                                            placeholder="John Doe"
+                                            className="bg-[#111] border-[#2a2a2a] h-12 px-6 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
+                                        />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
-                            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                            <div className={`grid grid-cols-1 ${!isLogin ? 'md:grid-cols-2' : ''} gap-6`}>
                                 <div className='space-y-2'>
                                     <Label className="text-[#888] text-[13px] font-medium uppercase tracking-widest">Email</Label>
                                     <Input
@@ -121,17 +167,19 @@ const Signup = () => {
                                         className="bg-[#111] border-[#2a2a2a] h-12 px-6 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
                                     />
                                 </div>
-                                <div className='space-y-2'>
-                                    <Label className="text-[#888] text-[13px] font-medium uppercase tracking-widest">Phone</Label>
-                                    <Input
-                                        type="text"
-                                        value={input.phoneNumber}
-                                        name="phoneNumber"
-                                        onChange={changeEventHandler}
-                                        placeholder="1234567890"
-                                        className="bg-[#111] border-[#2a2a2a] h-12 px-6 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
-                                    />
-                                </div>
+                                {!isLogin && (
+                                    <div className='space-y-2'>
+                                        <Label className="text-[#888] text-[13px] font-medium uppercase tracking-widest">Phone</Label>
+                                        <Input
+                                            type="text"
+                                            value={input.phoneNumber}
+                                            name="phoneNumber"
+                                            onChange={changeEventHandler}
+                                            placeholder="1234567890"
+                                            className="bg-[#111] border-[#2a2a2a] h-12 px-6 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
+                                        />
+                                    </div>
+                                )}
                             </div>
 
                             <div className='space-y-2'>
@@ -181,13 +229,23 @@ const Signup = () => {
                                     </Button>
                                 ) : (
                                     <Button type="submit" className="w-full bg-primary hover:bg-[#5558e8] h-12 rounded-xl text-white font-bold uppercase tracking-widest transition-all active:scale-95">
-                                        Create Account
+                                        {isLogin ? "Sign In" : "Create Account"}
                                     </Button>
                                 )
                             }
                             
                             <p className='text-center text-sm text-[#555] font-medium'>
-                                Already have an account? <Link to="/login" className='text-primary hover:underline'>Sign In</Link>
+                                {isLogin ? "New here?" : "Already have an account?"} 
+                                <button 
+                                    type="button"
+                                    onClick={() => {
+                                        setIsLogin(!isLogin);
+                                        navigate(isLogin ? '/signup' : '/login');
+                                    }}
+                                    className='text-primary hover:underline ml-1'
+                                >
+                                    {isLogin ? "Create an account" : "Sign In"}
+                                </button>
                             </p>
                         </form>
                     </motion.div>
@@ -197,4 +255,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default Auth

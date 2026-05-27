@@ -115,8 +115,12 @@ const Home = () => {
               <p className='text-[#666] text-lg leading-relaxed'>Reach 2M+ active candidates. Your first job post is completely free — no credit card needed.</p>
             </div>
             <div className='flex items-center gap-4 shrink-0'>
-              <button className='bg-white text-black px-8 py-3 rounded-lg font-bold text-[14px] hover:bg-[#e5e5e5] transition-all'>Post a Job Free</button>
-              <button className='bg-transparent border border-[#2a2a2a] text-[#ccc] px-8 py-3 rounded-lg font-bold text-[14px] hover:border-[#555] hover:text-white transition-all'>See Pricing Plans</button>
+              <Link to="/signup">
+                <button className='bg-white text-black px-8 py-3 rounded-lg font-bold text-[14px] hover:bg-[#e5e5e5] transition-all'>Post a Job Free</button>
+              </Link>
+              <Link to="/signup">
+                <button className='bg-transparent border border-[#2a2a2a] text-[#ccc] px-8 py-3 rounded-lg font-bold text-[14px] hover:border-[#555] hover:text-white transition-all'>See Pricing Plans</button>
+              </Link>
             </div>
           </div>
         </div>
