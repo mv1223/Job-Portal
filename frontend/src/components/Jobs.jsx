@@ -7,8 +7,6 @@ import Job from './Job';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 
-// const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8];
-
 const Jobs = () => {
     const { allJobs, searchedQuery } = useSelector(store => store.job);
     const [filterJobs, setFilterJobs] = useState(allJobs);
@@ -16,11 +14,13 @@ const Jobs = () => {
     useEffect(() => {
         if (searchedQuery) {
             const filteredJobs = allJobs.filter((job) => {
-                return job.title.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+                return (
+                    job.title.toLowerCase().includes(searchedQuery.toLowerCase()) ||
                     job.description.toLowerCase().includes(searchedQuery.toLowerCase()) ||
                     job.location.toLowerCase().includes(searchedQuery.toLowerCase()) ||
                     job.jobType.toLowerCase().includes(searchedQuery.toLowerCase()) ||
                     job.salary.toString().includes(searchedQuery.toLowerCase())
+                )
             })
             setFilterJobs(filteredJobs)
         } else {
@@ -29,31 +29,42 @@ const Jobs = () => {
     }, [allJobs, searchedQuery]);
 
     return (
-        <div className='bg-[#0a0a0a] min-h-screen'>
+        <div className='bg-[#f5f7f4] min-h-screen'>
             <Navbar />
-            <div className='noise-bg' />
-            
-            <HeroSection />
 
-            <div className='border-y border-[#111] py-8 px-6'>
-                <div className='max-w-7xl mx-auto'>
-                    <p className='text-[11px] text-[#333] uppercase tracking-[0.8px] mb-6 text-center font-bold'>Trusted by teams at</p>
-                    <div className='flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700'>
-                        {["Google", "Stripe", "Airbnb", "Notion", "Figma", "Linear", "Vercel", "Shopify"].map((co) => (
-                            <span key={co} className='text-lg font-bold text-white tracking-tighter cursor-pointer'>{co}</span>
-                        ))}
-                    </div>
+            {/* Hero Section */}
+            <div className='bg-gradient-to-r from-[#d8f78d] to-[#c8f169] py-20 rounded-b-[50px] shadow-sm'>
+                <div className='max-w-7xl mx-auto px-6 text-center'>
+                    <h1 className='text-5xl font-bold text-[#1d1d1d] mb-4'>
+                        Search Results ({filterJobs.length})
+                    </h1>
+
+                    <p className='text-[#5f5f5f] text-lg'>
+                        Find your perfect opportunity from premium companies
+                    </p>
                 </div>
             </div>
 
-            <div className='border-b border-[#111] py-4 px-6 overflow-x-auto whitespace-nowrap scrollbar-hide'>
-                <div className='max-w-7xl mx-auto flex items-center gap-2'>
-                    <span className='text-[12px] text-[#444] mr-2 font-medium'>Explore:</span>
-                    {["All Jobs", "Engineering", "Design", "Product", "Marketing", "Data & AI", "Finance", "Operations", "Remote Only", "Internships"].map((tag, idx) => (
-                        <button 
-                            key={tag} 
-                            className={`px-4 py-1.5 rounded-full text-[12px] font-medium transition-all ${
-                                idx === 0 ? 'bg-primary text-white' : 'bg-[#111] border border-[#1e1e1e] text-[#777] hover:border-primary hover:text-white'
+            {/* Category Pills */}
+            <div className='py-8 px-6 overflow-x-auto whitespace-nowrap'>
+                <div className='max-w-7xl mx-auto flex items-center gap-3'>
+                    {[
+                        "All Jobs",
+                        "Engineering",
+                        "Design",
+                        "Product",
+                        "Marketing",
+                        "Data & AI",
+                        "Finance",
+                        "Remote",
+                        "Internships"
+                    ].map((tag, idx) => (
+                        <button
+                            key={tag}
+                            className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                                idx === 0
+                                    ? 'bg-[#b8f34c] text-black'
+                                    : 'bg-white border border-[#e5e5e5] text-[#555] hover:bg-[#b8f34c] hover:text-black'
                             }`}
                         >
                             {tag}
@@ -62,19 +73,30 @@ const Jobs = () => {
                 </div>
             </div>
 
-            <div className='max-w-7xl mx-auto pt-20 px-6 pb-20 relative z-10'>
-                <div className='flex flex-col lg:grid lg:grid-cols-[260px_1fr] gap-12'>
-                    <aside className='sidebar'>
+            {/* Main Section */}
+            <div className='max-w-7xl mx-auto px-6 py-16'>
+                <div className='grid lg:grid-cols-[280px_1fr] gap-10'>
+
+                    {/* Sidebar */}
+                    <aside className='bg-white rounded-[30px] p-6 border border-[#ebebeb] shadow-sm h-fit sticky top-28'>
                         <FilterCard />
                     </aside>
-                    
-                    <main className='jobs-column'>
-                        <div className='jobs-header flex items-center justify-between mb-8'>
+
+                    {/* Jobs Section */}
+                    <main>
+
+                        {/* Header */}
+                        <div className='flex flex-col md:flex-row md:items-center md:justify-between mb-10 gap-4'>
                             <div>
-                                <h2 className='text-[15px] font-bold text-white'>{filterJobs.length} open positions</h2>
-                                <p className='text-[12px] text-[#555] mt-1'>Showing results for India · Remote</p>
+                                <h2 className='text-4xl font-bold text-[#1d1d1d]'>
+                                    Search Results ({filterJobs.length})
+                                </h2>
+                                <p className='text-[#666] mt-2'>
+                                    Discover premium opportunities for your career
+                                </p>
                             </div>
-                            <select className='bg-[#111] border border-[#1e1e1e] text-[#888] px-3 py-1.5 rounded-md text-[12px] outline-none cursor-pointer font-sans'>
+
+                            <select className='bg-white border border-[#dddddd] rounded-xl px-4 py-3 text-sm text-[#555] outline-none shadow-sm'>
                                 <option>Most Relevant</option>
                                 <option>Newest First</option>
                                 <option>Salary: High to Low</option>
@@ -82,58 +104,60 @@ const Jobs = () => {
                             </select>
                         </div>
 
-                        {
-                            filterJobs.length <= 0 ? (
-                                <div className='flex flex-col items-center justify-center py-32 bg-[#0e0e0e] rounded-xl border border-dashed border-[#181818]'>
-                                    <h2 className='text-xl font-bold text-[#444] tracking-tight'>No positions found</h2>
-                                    <p className='text-[#333] text-sm mt-2'>Adjust your filters to see more results.</p>
-                                </div>
-                            ) : (
-                                <div className='flex flex-col gap-3'>
-                                    {
-                                        filterJobs.map((job, idx) => (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{ 
-                                                    duration: 0.5, 
-                                                    delay: idx * 0.05,
-                                                    ease: "easeOut"
-                                                }}
-                                                key={job?._id}>
-                                                <Job job={job} />
-                                            </motion.div>
-                                        ))
-                                    }
-                                    
-                                    <div className='flex items-center justify-center gap-2 mt-12'>
-                                        <button className='px-4 py-2 bg-[#111] border border-[#1e1e1e] rounded-lg text-[12px] text-[#666] hover:bg-primary hover:text-white transition-all'>← Prev</button>
-                                        <button className='w-9 h-9 flex items-center justify-center bg-primary text-white rounded-lg text-[12px] font-bold'>1</button>
-                                        <button className='w-9 h-9 flex items-center justify-center bg-[#111] border border-[#1e1e1e] text-[#666] rounded-lg text-[12px] hover:border-primary hover:text-white transition-all'>2</button>
-                                        <button className='w-9 h-9 flex items-center justify-center bg-[#111] border border-[#1e1e1e] text-[#666] rounded-lg text-[12px] hover:border-primary hover:text-white transition-all'>3</button>
-                                        <span className='text-[#333] text-[12px] px-1'>...</span>
-                                        <button className='w-9 h-9 flex items-center justify-center bg-[#111] border border-[#1e1e1e] text-[#666] rounded-lg text-[12px] hover:border-primary hover:text-white transition-all'>42</button>
-                                        <button className='px-4 py-2 bg-[#111] border border-[#1e1e1e] rounded-lg text-[12px] text-[#666] hover:bg-primary hover:text-white transition-all'>Next →</button>
-                                    </div>
-                                </div>
-                            )
-                        }
+                        {/* Jobs */}
+                        {filterJobs.length <= 0 ? (
+                            <div className='bg-white rounded-[30px] border border-dashed border-[#dcdcdc] py-32 text-center shadow-sm'>
+                                <h2 className='text-2xl font-bold text-[#222]'>
+                                    No positions found
+                                </h2>
+                                <p className='text-[#777] mt-2'>
+                                    Adjust filters to explore more jobs.
+                                </p>
+                            </div>
+                        ) : (
+                            <div className='grid md:grid-cols-2 xl:grid-cols-3 gap-6'>
+                                {filterJobs.map((job, idx) => (
+                                    <motion.div
+                                        key={job?._id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                            duration: 0.5,
+                                            delay: idx * 0.04
+                                        }}
+                                    >
+                                        <Job job={job} />
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Pagination */}
+                        <div className='flex justify-center gap-3 mt-14'>
+                            <button className='px-5 py-3 rounded-xl border bg-white border-[#ddd] hover:bg-[#b8f34c] transition-all'>
+                                Prev
+                            </button>
+
+                            <button className='w-12 h-12 rounded-xl bg-[#b8f34c] font-semibold'>
+                                1
+                            </button>
+
+                            <button className='w-12 h-12 rounded-xl bg-white border border-[#ddd]'>
+                                2
+                            </button>
+
+                            <button className='w-12 h-12 rounded-xl bg-white border border-[#ddd]'>
+                                3
+                            </button>
+
+                            <button className='px-5 py-3 rounded-xl border bg-white border-[#ddd] hover:bg-[#b8f34c] transition-all'>
+                                Next
+                            </button>
+                        </div>
                     </main>
                 </div>
             </div>
 
-            <div className='scroll-section px-6 mb-20'>
-                <div className='max-w-7xl mx-auto bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10'>
-                    <div className='max-w-xl'>
-                        <h2 className='text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight'>Are you hiring? Post your role for free.</h2>
-                        <p className='text-[#666] text-lg leading-relaxed'>Reach 2M+ active candidates. Your first job post is completely free — no credit card needed.</p>
-                    </div>
-                    <div className='flex items-center gap-4 shrink-0'>
-                        <button className='bg-white text-black px-8 py-3 rounded-lg font-bold text-[14px] hover:bg-[#e5e5e5] transition-all'>Post a Job Free</button>
-                        <button className='bg-transparent border border-[#2a2a2a] text-[#ccc] px-8 py-3 rounded-lg font-bold text-[14px] hover:border-[#555] hover:text-white transition-all'>See Pricing Plans</button>
-                    </div>
-                </div>
-            </div>
             <Footer />
         </div>
     )
