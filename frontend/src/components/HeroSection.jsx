@@ -1,126 +1,175 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import { Button } from './ui/button'
-import { useDispatch } from 'react-redux';
-import { setSearchedQuery } from '@/redux/jobSlice';
-import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { Search, MapPin, Briefcase, Zap, Trophy, TrendingUp, Target, Sparkles, Rocket, Star } from 'lucide-react'
-import gsap from 'gsap'
-import { Spotlight } from './ui/spotlight'
-import { GridBackground } from './ui/grid-background'
+import { useDispatch } from 'react-redux'
+import { setSearchedQuery } from '@/redux/jobSlice'
+import { useNavigate } from 'react-router-dom'
+import { Search, MapPin, ArrowRight } from 'lucide-react'
 
 const HeroSection = () => {
     const [query, setQuery] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const containerRef = useRef(null);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     const searchJobHandler = () => {
         dispatch(setSearchedQuery(query));
         navigate("/browse");
-    }
-
-    const handleMouseMove = (e) => {
-        const { clientX, clientY } = e;
-        const { innerWidth, innerHeight } = window;
-        const x = (clientX / innerWidth - 0.5) * 40;
-        const y = (clientY / innerHeight - 0.5) * 40;
-        setMousePos({ x, y });
     };
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(".hero-title-word", {
-                opacity: 0,
-                y: 50,
-                filter: "blur(10px)",
-                duration: 1,
-                stagger: 0.1,
-                ease: "power4.out"
-            });
-        }, containerRef);
-        return () => ctx.revert();
-    }, []);
-
     return (
-        <section 
-            ref={containerRef} 
-            className='bg-[#0a0a0a] py-20 px-10'
-        >
-            <div className='max-w-4xl mx-auto text-center'>
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className='flex flex-col items-center'
-                >
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className='inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#111] border border-[#2a2a2a] text-[12px] text-[#888] mb-8'
-                    >
-                        <div className='w-1.5 h-1.5 bg-[#22c55e] rounded-full' />
-                        <span>2,400+ new jobs added this week</span>
-                    </motion.div>
-                    
-                    <h1 className='text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] text-white mb-6'>
-                        Find work that<br />actually <em className='not-italic text-primary'>fits you</em>
-                    </h1>
-                    
-                    <p className='max-w-lg text-[#666] text-lg leading-relaxed mb-10'>
-                        Search through thousands of verified job listings from top companies. 
-                        Your next role is one search away.
-                    </p>
+        <section className="px-6 pt-10 pb-20 bg-[#f5f7f4]">
+            <div className="max-w-7xl mx-auto">
 
-                    <div className='w-full max-w-2xl relative'>
-                        <div className='flex items-center bg-[#111] border border-[#2a2a2a] rounded-xl overflow-hidden shadow-2xl'>
-                            <div className='flex items-center flex-1 px-4'>
-                                <Search className='h-4 w-4 text-[#444] shrink-0' />
-                                <input
-                                    type="text"
-                                    placeholder='Job title, keyword or company...'
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    className='w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-[#444] px-4 py-4 text-[14px]'
-                                />
-                            </div>
-                            <div className='w-[1px] h-6 bg-[#2a2a2a]' />
-                            <div className='flex items-center flex-1 px-4'>
-                                <MapPin className='h-4 w-4 text-[#444] shrink-0' />
-                                <input
-                                    type="text"
-                                    placeholder='Location or Remote'
-                                    className='w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-[#444] px-4 py-4 text-[14px]'
-                                />
-                            </div>
-                            <Button 
-                                onClick={searchJobHandler}
-                                className='bg-primary hover:bg-primary/90 text-white rounded-lg px-6 py-2 h-auto m-1 font-semibold text-[13px] transition-all'
-                            >
-                                Search Jobs
-                            </Button>
-                        </div>
+                {/* Main Hero Card */}
+                <div className="bg-[#B7F34D] rounded-[45px] overflow-hidden relative px-8 md:px-16 py-16 md:py-24 shadow-xl">
+
+                    {/* Top Badge */}
+                    <div className="inline-flex items-center gap-2 bg-white rounded-full px-5 py-2 shadow-sm mb-8">
+                        <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                        <span className="text-sm font-medium text-[#111827]">
+                            2,400+ new jobs added this week
+                        </span>
                     </div>
 
-                    <div className='flex items-center justify-center gap-8 md:gap-12 mt-12'>
-                        <div className='text-center'>
-                            <strong className='block text-2xl font-bold text-white tracking-tight'>84,500+</strong>
-                            <span className='text-[12px] text-[#555]'>Active Jobs</span>
+                    {/* Main Content */}
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+                        {/* Left Content */}
+                        <div>
+
+                            <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] text-[#111827] tracking-tight">
+                                Find work
+                                <br />
+                                that actually
+                                <span className="block text-white">
+                                    fits you.
+                                </span>
+                            </h1>
+
+                            <p className="text-[#374151] text-lg mt-8 max-w-xl leading-relaxed">
+                                Search through thousands of verified jobs
+                                from top companies and discover career
+                                opportunities built for your future.
+                            </p>
+
+                            {/* Search Box */}
+                            <div className="bg-white rounded-[28px] shadow-xl p-3 mt-10 max-w-2xl">
+
+                                <div className="flex flex-col lg:flex-row items-center gap-3">
+
+                                    <div className="flex items-center flex-1 w-full px-4">
+                                        <Search className="w-5 h-5 text-gray-400" />
+
+                                        <input
+                                            type="text"
+                                            placeholder="Job title, keyword or company"
+                                            onChange={(e) =>
+                                                setQuery(e.target.value)
+                                            }
+                                            className="w-full border-none outline-none bg-transparent px-4 py-4 text-[#111827]"
+                                        />
+                                    </div>
+
+                                    <div className="hidden lg:block w-[1px] h-10 bg-gray-200" />
+
+                                    <div className="flex items-center flex-1 w-full px-4">
+                                        <MapPin className="w-5 h-5 text-gray-400" />
+
+                                        <input
+                                            type="text"
+                                            placeholder="Location or Remote"
+                                            className="w-full border-none outline-none bg-transparent px-4 py-4 text-[#111827]"
+                                        />
+                                    </div>
+
+                                    <Button
+                                        onClick={searchJobHandler}
+                                        className="bg-[#111827] hover:bg-black text-white rounded-full px-8 py-6 text-base font-semibold h-auto"
+                                    >
+                                        Search Jobs
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Stats */}
+                            <div className="flex flex-wrap gap-10 mt-12">
+
+                                <div>
+                                    <h3 className="text-3xl font-bold text-[#111827]">
+                                        84K+
+                                    </h3>
+                                    <p className="text-gray-700 mt-1">
+                                        Active Jobs
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-3xl font-bold text-[#111827]">
+                                        12K+
+                                    </h3>
+                                    <p className="text-gray-700 mt-1">
+                                        Companies Hiring
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-3xl font-bold text-[#111827]">
+                                        1.4M+
+                                    </h3>
+                                    <p className="text-gray-700 mt-1">
+                                        Candidates Placed
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div className='w-[1px] h-8 bg-[#1e1e1e]' />
-                        <div className='text-center'>
-                            <strong className='block text-2xl font-bold text-white tracking-tight'>12,000+</strong>
-                            <span className='text-[12px] text-[#555]'>Companies Hiring</span>
-                        </div>
-                        <div className='w-[1px] h-8 bg-[#1e1e1e]' />
-                        <div className='text-center'>
-                            <strong className='block text-2xl font-bold text-white tracking-tight'>1.4M+</strong>
-                            <span className='text-[12px] text-[#555]'>Candidates Placed</span>
+
+                        {/* Right Cards */}
+                        <div className="relative hidden lg:flex justify-center">
+
+                            <div className="bg-white rounded-[32px] p-8 shadow-xl w-[340px] rotate-[-6deg] absolute left-0 top-10">
+                                <h3 className="font-bold text-xl text-[#111827]">
+                                    Top Companies Hiring
+                                </h3>
+
+                                <div className="space-y-4 mt-6">
+                                    {[
+                                        "Google",
+                                        "Microsoft",
+                                        "Amazon",
+                                        "Meta"
+                                    ].map((company) => (
+                                        <div
+                                            key={company}
+                                            className="flex items-center justify-between border-b pb-3"
+                                        >
+                                            <span className="font-medium">
+                                                {company}
+                                            </span>
+
+                                            <ArrowRight
+                                                size={18}
+                                                className="text-[#B7F34D]"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="bg-[#111827] text-white rounded-[32px] p-8 shadow-xl w-[320px] rotate-[8deg] ml-32 mt-40">
+                                <h3 className="font-bold text-2xl">
+                                    10,000+
+                                </h3>
+
+                                <p className="text-gray-300 mt-2">
+                                    Companies trust HireSync for hiring
+                                    top talent globally.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </section>
-    )
-}
+    );
+};
 
-export default HeroSection
+export default HeroSection;
