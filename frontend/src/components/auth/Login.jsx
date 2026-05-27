@@ -10,7 +10,7 @@ import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setUser } from '@/redux/authSlice'
-import { Loader2, Search, Briefcase, Trophy, Clock } from 'lucide-react'
+import { Loader2, Search, Briefcase, Trophy, Clock, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const Login = () => {
@@ -60,16 +60,20 @@ const Login = () => {
         }
     },[])
     return (
-        <div className='bg-white min-h-screen flex flex-col'>
+        <div className='bg-black min-h-screen flex flex-col selection:bg-primary selection:text-white'>
             <Navbar />
-            <div className='flex-1 flex'>
+            <div className='noise-bg' />
+            <div className='flex-1 flex relative z-10'>
                 {/* Left Side: Animated Illustration */}
-                <div className='hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 items-center justify-center p-20 relative overflow-hidden'>
+                <div className='hidden lg:flex lg:w-1/2 bg-zinc-950 items-center justify-center p-20 relative overflow-hidden border-r border-white/5'>
                     <div className='absolute inset-0 pointer-events-none'>
                         <motion.div 
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                            className='absolute top-[-10%] left-[-10%] w-[120%] h-[120%] border-[40px] border-white/5 rounded-full'
+                            animate={{ 
+                                scale: [1, 1.2, 1],
+                                rotate: [0, 90, 0],
+                            }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                            className='absolute top-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-primary/10 blur-[120px]'
                         />
                     </div>
                     
@@ -82,94 +86,104 @@ const Login = () => {
                         <motion.div 
                             animate={{ y: [0, -20, 0] }}
                             transition={{ duration: 4, repeat: Infinity }}
-                            className='bg-white/10 backdrop-blur-md p-10 rounded-[3rem] border border-white/20 mb-10 inline-block shadow-2xl'
+                            className='bg-white/5 backdrop-blur-3xl p-10 rounded-[3rem] border border-white/10 mb-10 inline-block shadow-2xl'
                         >
-                            <Loader2 size={80} className='text-white animate-spin-slow' />
+                            <Sparkles size={80} className='text-primary animate-pulse' />
                         </motion.div>
-                        <h2 className='text-5xl font-black mb-6'>Find Your Future</h2>
-                        <p className='text-xl text-white/80 font-medium max-w-md mx-auto'>Join thousands of professionals who have found their dream roles using our AI platform.</p>
+                        <h2 className='text-6xl font-black mb-6 tracking-tighter'>Welcome Back</h2>
+                        <p className='text-xl text-white/40 font-medium max-w-md mx-auto leading-relaxed'>Continue your professional journey with our neural-matching intelligence.</p>
                     </motion.div>
 
-                    {/* Floating icons */}
-                    <motion.div animate={{ y: [0, -30, 0], x: [0, 20, 0] }} transition={{ duration: 6, repeat: Infinity }} className='absolute top-20 right-20 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10'><Search className='text-white' /></motion.div>
-                    <motion.div animate={{ y: [0, 40, 0], x: [0, -30, 0] }} transition={{ duration: 8, repeat: Infinity }} className='absolute bottom-20 left-20 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10'><Briefcase className='text-white' /></motion.div>
-                    <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }} transition={{ duration: 5, repeat: Infinity }} className='absolute top-1/2 right-10 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10'><Trophy className='text-white' /></motion.div>
-                    <motion.div animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className='absolute top-1/2 left-10 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10'><Clock className='text-white' /></motion.div>
+                    {/* Floating elements */}
+                    <div className='absolute bottom-20 left-10 flex gap-4'>
+                        <div className='px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/40'>AI Powered</div>
+                        <div className='px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/40'>Real-time Tracking</div>
+                    </div>
                 </div>
 
                 {/* Right Side: Login Form */}
-                <div className='w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-50/50'>
+                <div className='w-full lg:w-1/2 flex items-center justify-center p-8 md:p-20 bg-black'>
                     <motion.div 
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
                         className='w-full max-w-md'
                     >
-                        <form onSubmit={submitHandler} className='bg-white border border-slate-100 rounded-[2.5rem] p-12 shadow-2xl shadow-indigo-100'>
-                            <div className='text-center mb-10'>
-                                <h1 className='font-black text-4xl text-slate-900 mb-2'>Welcome Back</h1>
-                                <p className='text-slate-500 font-medium'>Sign in to your account</p>
-                            </div>
+                        <div className='mb-12'>
+                            <h3 className='text-4xl font-bold text-white mb-2 tracking-tighter'>Sign In</h3>
+                            <p className='text-white/40 font-medium'>Access your dashboard and applications.</p>
+                        </div>
 
-                            <div className='space-y-6'>
-                                <div className='space-y-2'>
-                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Email Address</Label>
+                        <form onSubmit={submitHandler} className='space-y-6'>
+                            <div className='space-y-2'>
+                                <Label className="text-white/60">Email Address</Label>
+                                <div className='relative group'>
                                     <Input
                                         type="email"
                                         value={input.email}
                                         name="email"
                                         onChange={changeEventHandler}
-                                        placeholder="name@example.com"
-                                        className="h-14 rounded-2xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold px-6"
+                                        placeholder="name@company.com"
+                                        className="bg-zinc-900/50 border-white/5 h-14 px-6 rounded-2xl text-white placeholder:text-white/10 focus:ring-primary focus:border-primary transition-all"
                                     />
-                                </div>
-
-                                <div className='space-y-2'>
-                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Password</Label>
-                                    <Input
-                                        type="password"
-                                        value={input.password}
-                                        name="password"
-                                        onChange={changeEventHandler}
-                                        placeholder="••••••••"
-                                        className="h-14 rounded-2xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold px-6"
-                                    />
-                                </div>
-
-                                <div className='py-2'>
-                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1 block mb-4">Select Your Role</Label>
-                                    <div className="flex items-center gap-4">
-                                        <div className="flex items-center space-x-2 bg-slate-50 px-6 py-4 rounded-2xl border border-slate-100 cursor-pointer hover:border-indigo-100 transition-all flex-1">
-                                            <input
-                                                type="radio"
-                                                name="role"
-                                                value="student"
-                                                checked={input.role === 'student'}
-                                                onChange={changeEventHandler}
-                                                className="cursor-pointer w-4 h-4 accent-indigo-600"
-                                            />
-                                            <Label className="font-bold text-slate-600 cursor-pointer">Student</Label>
-                                        </div>
-                                        <div className="flex items-center space-x-2 bg-slate-50 px-6 py-4 rounded-2xl border border-slate-100 cursor-pointer hover:border-indigo-100 transition-all flex-1">
-                                            <input
-                                                type="radio"
-                                                name="role"
-                                                value="recruiter"
-                                                checked={input.role === 'recruiter'}
-                                                onChange={changeEventHandler}
-                                                className="cursor-pointer w-4 h-4 accent-indigo-600"
-                                            />
-                                            <Label className="font-bold text-slate-600 cursor-pointer">Recruiter</Label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {
-                                    loading ? <Button className="w-full h-14 rounded-2xl bg-indigo-600"><Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait</Button> : <Button type="submit" className="w-full h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-700 font-black text-lg shadow-xl shadow-indigo-100 transition-all active:scale-95">Login</Button>
-                                }
-                                <div className='text-center pt-4'>
-                                    <span className='text-slate-500 font-bold text-sm'>Don't have an account? <Link to="/signup" className='text-indigo-600 hover:underline'>Signup</Link></span>
                                 </div>
                             </div>
+
+                            <div className='space-y-2'>
+                                <Label className="text-white/60">Password</Label>
+                                <Input
+                                    type="password"
+                                    value={input.password}
+                                    name="password"
+                                    onChange={changeEventHandler}
+                                    placeholder="••••••••"
+                                    className="bg-zinc-900/50 border-white/5 h-14 px-6 rounded-2xl text-white placeholder:text-white/10 focus:ring-primary focus:border-primary transition-all"
+                                />
+                            </div>
+
+                            <div className='space-y-4'>
+                                <Label className="text-white/60">I am a</Label>
+                                <div className='grid grid-cols-2 gap-4'>
+                                    <label className={`flex items-center justify-center p-4 rounded-2xl border cursor-pointer transition-all ${input.role === 'student' ? 'bg-primary/10 border-primary text-primary' : 'bg-zinc-900/50 border-white/5 text-white/40 hover:border-white/10'}`}>
+                                        <input
+                                            type="radio"
+                                            name="role"
+                                            value="student"
+                                            checked={input.role === 'student'}
+                                            onChange={changeEventHandler}
+                                            className="hidden"
+                                        />
+                                        <span className='font-bold text-[10px] uppercase tracking-widest'>Student</span>
+                                    </label>
+                                    <label className={`flex items-center justify-center p-4 rounded-2xl border cursor-pointer transition-all ${input.role === 'recruiter' ? 'bg-primary/10 border-primary text-primary' : 'bg-zinc-900/50 border-white/5 text-white/40 hover:border-white/10'}`}>
+                                        <input
+                                            type="radio"
+                                            name="role"
+                                            value="recruiter"
+                                            checked={input.role === 'recruiter'}
+                                            onChange={changeEventHandler}
+                                            className="hidden"
+                                        />
+                                        <span className='font-bold text-[10px] uppercase tracking-widest'>Recruiter</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {
+                                loading ? (
+                                    <Button disabled className="w-full bg-primary h-14 rounded-2xl text-white font-bold uppercase tracking-widest shadow-xl shadow-primary/20">
+                                        <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Authenticating
+                                    </Button>
+                                ) : (
+                                    <Button type="submit" className="w-full bg-primary hover:bg-primary/90 h-14 rounded-2xl text-white font-bold uppercase tracking-widest shadow-xl shadow-primary/20 transition-all active:scale-95">
+                                        Sign In
+                                    </Button>
+                                )
+                            }
+                            
+                            <p className='text-center text-sm text-white/40 font-medium'>
+                                New here? <Link to="/signup" className='text-primary hover:underline'>Create an account</Link>
+                            </p>
                         </form>
                     </motion.div>
                 </div>

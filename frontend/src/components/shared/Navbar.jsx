@@ -2,7 +2,7 @@ import React from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Button } from '../ui/button'
 import { Avatar, AvatarImage } from '../ui/avatar'
-import { LogOut, User2, Briefcase } from 'lucide-react'
+import { LogOut, User2, Briefcase, Sparkles } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
@@ -10,6 +10,7 @@ import { USER_API_END_POINT } from '@/utils/constant'
 import { setUser } from '@/redux/authSlice'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
+import MagneticButton from '../ui/magnetic-button'
 
 const Navbar = () => {
     const { user } = useSelector(store => store.auth);
@@ -47,7 +48,7 @@ const Navbar = () => {
                 </Link>
                 
                 <div className='flex items-center gap-8'>
-                    <ul className='hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40'>
+                    <ul className='hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-white/40'>
                         {
                             user && user.role === 'recruiter' ? (
                                 <>
@@ -57,17 +58,14 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <li className='hover:text-white transition-colors'><Link to="/">Home</Link></li>
-                                    <li className='hover:text-white transition-colors'>
-                                        <motion.div
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9, filter: "blur(4px)" }}
-                                            transition={{ duration: 0.2 }}
-                                        >
-                                            <Link to="/jobs">Jobs</Link>
-                                        </motion.div>
-                                    </li>
+                                    <li className='hover:text-white transition-colors'><Link to="/jobs">Jobs</Link></li>
                                     <li className='hover:text-white transition-colors'><Link to="/browse">Browse</Link></li>
-                                    <li><Link to="/ai-roadmap" className="text-primary">Roadmap</Link></li>
+                                    <li>
+                                        <Link to="/ai-roadmap" className="flex items-center gap-2 text-primary group">
+                                            <Sparkles className="w-3 h-3 animate-pulse" />
+                                            Roadmap
+                                        </Link>
+                                    </li>
                                 </>
                             )
                         }
@@ -80,12 +78,16 @@ const Navbar = () => {
                             !user ? (
                                 <>
                                     <Link to="/login">
-                                        <Button variant="ghost" className="font-bold text-[10px] uppercase tracking-widest text-white/60 hover:text-white">Sign In</Button>
+                                        <MagneticButton>
+                                            <Button variant="ghost" className="font-bold text-[10px] uppercase tracking-widest text-white/60 hover:text-white">Sign In</Button>
+                                        </MagneticButton>
                                     </Link>
                                     <Link to="/signup">
-                                        <Button className="bg-white hover:bg-white/90 text-black px-6 h-10 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all active:scale-95">
-                                            Join
-                                        </Button>
+                                        <MagneticButton>
+                                            <Button className="bg-white hover:bg-white/90 text-black px-6 h-10 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all active:scale-95 shadow-xl shadow-white/10">
+                                                Join
+                                            </Button>
+                                        </MagneticButton>
                                     </Link>
                                 </>
                             ) : (
@@ -99,29 +101,29 @@ const Navbar = () => {
                                     </PopoverTrigger>
                                     <PopoverContent className="w-64 mt-4 p-0 rounded-2xl overflow-hidden shadow-2xl border-white/5 bg-zinc-950">
                                         <div className='p-6 border-b border-white/5'>
-                                            <div className='flex items-center gap-3'>
+                                            <div className='flex items-center gap-4 mb-4'>
                                                 <Avatar className="h-10 w-10 rounded-xl">
-                                                    <AvatarImage src={user?.profile?.profilePhoto} />
+                                                    <AvatarImage src={user?.profile?.profilePhoto} alt="@user" />
                                                 </Avatar>
                                                 <div>
-                                                    <h4 className='font-bold text-sm text-white'>{user?.fullname}</h4>
-                                                    <p className='text-white/40 text-[9px] font-bold uppercase tracking-widest mt-0.5'>{user?.role}</p>
+                                                    <h4 className='font-bold text-white text-sm'>{user?.fullname}</h4>
+                                                    <p className='text-[10px] font-bold text-white/20 uppercase tracking-widest'>{user?.role}</p>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className='p-2'>
-                                            {
-                                                user && user.role === 'student' && (
-                                                    <Link to="/profile" className='flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 text-white/60 hover:text-white transition-all font-bold text-[10px] uppercase tracking-widest'>
-                                                        <User2 size={16} />
-                                                        <span>Profile</span>
-                                                    </Link>
-                                                )
-                                            }
-                                            <button onClick={logoutHandler} className='w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-500/10 text-white/60 hover:text-red-500 transition-all font-bold text-[10px] uppercase tracking-widest text-left'>
-                                                <LogOut size={16} />
-                                                <span>Logout</span>
-                                            </button>
+                                            <div className='flex flex-col gap-1'>
+                                                {
+                                                    user && user.role === 'student' && (
+                                                        <Link to="/profile" className='flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors group'>
+                                                            <User2 className="w-4 h-4 text-white/40 group-hover:text-primary transition-colors" />
+                                                            <span className='text-xs font-bold text-white/60 group-hover:text-white transition-colors'>View Profile</span>
+                                                        </Link>
+                                                    )
+                                                }
+                                                <button onClick={logoutHandler} className='flex items-center gap-3 p-3 rounded-xl hover:bg-red-500/5 transition-colors group w-full text-left'>
+                                                    <LogOut className="w-4 h-4 text-white/40 group-hover:text-red-500 transition-colors" />
+                                                    <span className='text-xs font-bold text-white/60 group-hover:text-white transition-colors'>Sign Out</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </PopoverContent>
                                 </Popover>

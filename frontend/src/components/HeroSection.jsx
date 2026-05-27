@@ -3,9 +3,11 @@ import { Button } from './ui/button'
 import { useDispatch } from 'react-redux';
 import { setSearchedQuery } from '@/redux/jobSlice';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { Search, Briefcase, Zap, Trophy, TrendingUp, Target, Sparkles, Rocket, Star } from 'lucide-react'
 import gsap from 'gsap'
+import { Spotlight } from './ui/spotlight'
+import { GridBackground } from './ui/grid-background'
 
 const HeroSection = () => {
     const [query, setQuery] = useState("");
@@ -13,11 +15,20 @@ const HeroSection = () => {
     const navigate = useNavigate();
     const words = "Search, Apply & Get Your Dream Jobs".split(" ");
     const containerRef = useRef(null);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     const searchJobHandler = () => {
         dispatch(setSearchedQuery(query));
         navigate("/browse");
     }
+
+    const handleMouseMove = (e) => {
+        const { clientX, clientY } = e;
+        const { innerWidth, innerHeight } = window;
+        const x = (clientX / innerWidth - 0.5) * 40;
+        const y = (clientY / innerHeight - 0.5) * 40;
+        setMousePos({ x, y });
+    };
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -29,52 +40,60 @@ const HeroSection = () => {
                 stagger: 0.1,
                 ease: "power4.out"
             });
-            
-            gsap.to(".floating-icon", {
-                y: "random(-20, 20)",
-                x: "random(-20, 20)",
-                rotation: "random(-15, 15)",
-                duration: "random(2, 4)",
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
-            });
         }, containerRef);
         return () => ctx.revert();
     }, []);
 
     return (
-        <div ref={containerRef} className='relative overflow-hidden bg-black min-h-[95vh] flex items-center justify-center selection:bg-primary selection:text-white'>
-            {/* High-end Cinematic Background */}
-            <div className='absolute inset-0 pointer-events-none'>
-                <motion.div 
-                    animate={{ 
-                        scale: [1, 1.2, 1],
-                        rotate: [0, 90, 0],
-                        x: [0, 100, 0],
-                        y: [0, -50, 0]
-                    }}
-                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                    className='absolute top-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-gradient-to-r from-cyan-500/20 via-blue-600/20 to-indigo-700/20 blur-[120px]'
-                />
-                <motion.div 
-                    animate={{ 
-                        scale: [1, 1.3, 1],
-                        rotate: [0, -45, 0],
-                        x: [0, -80, 0],
-                        y: [0, 100, 0]
-                    }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                    className='absolute bottom-[-30%] right-[-10%] w-[900px] h-[900px] rounded-full bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-rose-700/20 blur-[150px]'
+        <div 
+            ref={containerRef} 
+            onMouseMove={handleMouseMove}
+            className='relative overflow-hidden bg-black min-h-[95vh] flex items-center justify-center selection:bg-primary selection:text-white'
+        >
+            <GridBackground className="absolute inset-0">
+                <Spotlight
+                    className="-top-40 left-0 md:left-60 md:-top-20"
+                    fill="white"
                 />
                 
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
+                {/* High-end Cinematic Background */}
+                <div className='absolute inset-0 pointer-events-none'>
+                    <motion.div 
+                        animate={{ 
+                            scale: [1, 1.2, 1],
+                            rotate: [0, 90, 0],
+                            x: [0, 100, 0],
+                            y: [0, -50, 0]
+                        }}
+                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                        className='absolute top-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-gradient-to-r from-cyan-500/20 via-blue-600/20 to-indigo-700/20 blur-[120px]'
+                    />
+                    <motion.div 
+                        animate={{ 
+                            scale: [1, 1.3, 1],
+                            rotate: [0, -45, 0],
+                            x: [0, -80, 0],
+                            y: [0, 100, 0]
+                        }}
+                        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                        className='absolute bottom-[-30%] right-[-10%] w-[900px] h-[900px] rounded-full bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-rose-700/20 blur-[150px]'
+                    />
+                </div>
+            </GridBackground>
+
+            {/* Floating 3D Icons */}
+            <div className='absolute inset-0 pointer-events-none overflow-hidden z-0'>
+                <motion.div style={{ x: mousePos.x * 1.5, y: mousePos.y * 1.5 }} className='absolute top-1/4 left-1/4 opacity-20'><Briefcase size={40} className='text-primary' /></motion.div>
+                <motion.div style={{ x: -mousePos.x * 2, y: -mousePos.y * 2 }} className='absolute top-1/3 right-1/4 opacity-20'><Zap size={30} className='text-cyan-400' /></motion.div>
+                <motion.div style={{ x: mousePos.x * 2.5, y: -mousePos.y * 2.5 }} className='absolute bottom-1/4 left-1/3 opacity-20'><Trophy size={35} className='text-purple-500' /></motion.div>
+                <motion.div style={{ x: -mousePos.x * 1.8, y: mousePos.y * 1.8 }} className='absolute bottom-1/3 right-1/3 opacity-20'><Sparkles size={45} className='text-blue-500' /></motion.div>
             </div>
 
             <div className='max-w-7xl mx-auto px-6 relative z-10 text-center'>
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
+                    style={{ rotateX: -mousePos.y / 5, rotateY: mousePos.x / 5 }}
                     className='flex flex-col items-center gap-10'
                 >
                     <motion.div 
@@ -98,74 +117,32 @@ const HeroSection = () => {
                         ))}
                     </h1>
                     
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8 }}
-                        className='text-xl text-white/40 max-w-2xl mx-auto font-medium leading-relaxed tracking-tight'
-                    >
-                        Experience a seamless, AI-driven journey to your next career milestone. Built for speed, precision, and your global success.
-                    </motion.p>
-                    
-                    <motion.div 
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 }}
-                        className='w-full max-w-3xl relative group mt-4'
-                    >
-                        <div className='absolute -inset-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000' />
-                        <div className='relative flex items-center p-3 bg-zinc-900/50 backdrop-blur-3xl rounded-[2.5rem] border border-white/10 shadow-2xl'>
-                            <div className='flex-1 flex items-center gap-6 pl-8'>
-                                <Search className='text-cyan-400' size={28} />
+                    <p className='max-w-2xl text-white/40 font-medium text-lg leading-relaxed'>
+                        Experience the next generation of career development. 
+                        Powered by AI, designed for excellence.
+                    </p>
+
+                    <div className='w-full max-w-2xl relative group'>
+                        <div className='absolute -inset-1 bg-gradient-to-r from-primary to-cyan-500 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200' />
+                        <div className='relative flex items-center bg-zinc-900/90 backdrop-blur-3xl border border-white/10 rounded-[2rem] p-2 pr-4 shadow-2xl'>
+                            <div className='flex items-center flex-1 px-6'>
+                                <Search className='h-5 w-5 text-white/20' />
                                 <input
                                     type="text"
-                                    placeholder='Search for roles, skills, or companies...'
+                                    placeholder='Search for titles, companies, or skills...'
                                     onChange={(e) => setQuery(e.target.value)}
-                                    className='w-full bg-transparent outline-none border-none text-xl font-bold text-white placeholder:text-white/10'
+                                    className='w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-white/20 px-4 py-4 font-medium'
                                 />
                             </div>
                             <Button 
-                                onClick={searchJobHandler} 
-                                className="h-16 px-14 rounded-[1.8rem] bg-white text-black hover:bg-white/90 font-black text-lg transition-all active:scale-95 shadow-2xl"
+                                onClick={searchJobHandler}
+                                className='bg-primary hover:bg-primary/90 text-white rounded-2xl px-8 py-6 font-bold shadow-xl shadow-primary/20 transition-all duration-300 hover:scale-105 active:scale-95'
                             >
                                 Discover
                             </Button>
                         </div>
-                    </motion.div>
-
-                    <div className='flex flex-wrap items-center justify-center gap-12 mt-12'>
-                        {[
-                            { label: "Fast Response", val: "Zap Response", icon: <Zap className='text-amber-400' />, color: "bg-amber-400/10" },
-                            { label: "Career Growth", val: "98% Growth", icon: <TrendingUp className='text-emerald-400' />, color: "bg-emerald-400/10" },
-                            { label: "AI Matching", val: "Neural Match", icon: <Target className='text-cyan-400' />, color: "bg-cyan-400/10" },
-                            { label: "Top Rated", val: "5-Star Platform", icon: <Star className='text-purple-400' />, color: "bg-purple-400/10" }
-                        ].map((item, idx) => (
-                            <motion.div 
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 1.2 + idx * 0.1 }}
-                                key={idx} 
-                                className='flex items-center gap-5 group cursor-default'
-                            >
-                                <div className={`p-4 rounded-2xl ${item.color} border border-white/5 transition-transform group-hover:scale-110 group-hover:rotate-6`}>
-                                    {item.icon}
-                                </div>
-                                <div className='text-left'>
-                                    <p className='text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mb-1'>{item.label}</p>
-                                    <p className='text-sm font-black text-white group-hover:text-cyan-400 transition-colors'>{item.val}</p>
-                                </div>
-                            </motion.div>
-                        ))}
                     </div>
                 </motion.div>
-            </div>
-
-            {/* Floating High-end Icons */}
-            <div className='absolute inset-0 pointer-events-none overflow-hidden'>
-                <div className='floating-icon absolute top-[15%] left-[10%] text-cyan-500/20'><Rocket size={48} /></div>
-                <div className='floating-icon absolute top-[20%] right-[15%] text-purple-500/20'><Trophy size={64} /></div>
-                <div className='floating-icon absolute bottom-[20%] left-[20%] text-emerald-500/20'><Star size={56} /></div>
-                <div className='floating-icon absolute bottom-[15%] right-[10%] text-blue-500/20'><Briefcase size={42} /></div>
             </div>
         </div>
     )

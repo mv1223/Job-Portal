@@ -4,19 +4,20 @@ import { Button } from './ui/button';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSearchedQuery } from '@/redux/jobSlice';
-import { Zap } from 'lucide-react';
+import { Zap, Palette, Users, Landmark, Headphones, Briefcase, Database, Cloud, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { TiltCard } from './ui/tilt-card';
 
 const category = [
-    "Design & Development",
-    "Human Research",
-    "Finance Management",
-    "Customer Support",
-    "Project Management",
-    "Marketing & Sales",
-    "Data Science",
-    "DevOps",
-    "Cybersecurity"
+    { name: "Design & Development", icon: Palette },
+    { name: "Human Research", icon: Users },
+    { name: "Finance Management", icon: Landmark },
+    { name: "Customer Support", icon: Headphones },
+    { name: "Project Management", icon: Briefcase },
+    { name: "Marketing & Sales", icon: Zap },
+    { name: "Data Science", icon: Database },
+    { name: "DevOps", icon: Cloud },
+    { name: "Cybersecurity", icon: ShieldCheck }
 ]
 
 const CategoryCarousel = () => {
@@ -45,20 +46,25 @@ const CategoryCarousel = () => {
                 <CarouselContent className="gap-8 px-4">
                     {category.map((cat, index) => (
                         <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5 pl-0">
-                            <motion.div
-                                whileHover={{ y: -10, scale: 1.02 }}
-                                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                                <Button 
-                                    onClick={() => searchJobHandler(cat)} 
-                                    className="w-full h-48 flex flex-col items-center justify-center gap-6 rounded-3xl border border-white/5 bg-zinc-900/50 backdrop-blur-3xl hover:bg-zinc-800 hover:border-white/10 transition-all duration-700 shadow-2xl"
+                            <TiltCard>
+                                <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                                 >
-                                    <div className='p-4 rounded-2xl bg-white/5 group-hover:bg-primary/20 transition-colors duration-500'>
-                                        <Zap size={24} className='text-primary' />
-                                    </div>
-                                    <span className='font-bold text-[10px] uppercase tracking-[0.2em] text-white/60 group-hover:text-white'>{cat}</span>
-                                </Button>
-                            </motion.div>
+                                    <Button 
+                                        onClick={() => searchJobHandler(cat.name)} 
+                                        className="w-full h-48 flex flex-col items-center justify-center gap-6 rounded-3xl border border-white/5 bg-zinc-900/50 backdrop-blur-3xl hover:bg-zinc-800/80 hover:border-primary/50 transition-all duration-700 shadow-2xl relative overflow-hidden group/card"
+                                    >
+                                        <div className='p-4 rounded-2xl bg-white/5 group-hover/card:bg-primary/20 transition-colors duration-500 relative z-10'>
+                                            <cat.icon size={24} className='text-primary' />
+                                        </div>
+                                        <span className='font-bold text-[10px] uppercase tracking-[0.2em] text-white/60 group-hover/card:text-white relative z-10'>{cat.name}</span>
+                                        
+                                        {/* Animated Background Gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700" />
+                                    </Button>
+                                </motion.div>
+                            </TiltCard>
                         </CarouselItem>
                     ))}
                 </CarouselContent>

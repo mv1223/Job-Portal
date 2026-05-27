@@ -130,118 +130,71 @@ const AiRoadmap = () => {
 
                 <AnimatePresence>
                     {roadmap && (
-                        <motion.div 
-                            initial={{ opacity: 0, y: 40 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                            className='grid grid-cols-1 lg:grid-cols-12 gap-20 relative z-10'
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className='relative z-10'
                         >
-                            {/* Roadmap Steps */}
-                            <div className='lg:col-span-8 space-y-20'>
+                            <div className='flex flex-col md:flex-row items-center justify-between gap-8 mb-20'>
+                                <div className='text-left'>
+                                    <h2 className='text-4xl md:text-5xl font-bold text-white tracking-tighter mb-4'>Path for {roadmap.title}</h2>
+                                    <p className='text-white/40 font-medium flex items-center gap-2'>
+                                        <Clock className='w-4 h-4 text-primary' /> Estimated Duration: {roadmap.duration}
+                                    </p>
+                                </div>
+                                <Button onClick={() => setRoadmap(null)} variant="outline" className="border-white/10 text-white hover:bg-white/5 rounded-2xl px-8 h-12 font-bold uppercase tracking-widest text-[10px]">
+                                    New Roadmap
+                                </Button>
+                            </div>
+
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
                                 {roadmap.steps.map((step, idx) => (
-                                    <motion.div 
-                                        initial={{ opacity: 0, x: -30 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: idx * 0.2 }}
+                                    <motion.div
                                         key={idx}
-                                        className='relative pl-24'
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className={`p-8 rounded-[2.5rem] bg-zinc-900/50 backdrop-blur-3xl border border-white/5 hover:border-primary/50 transition-all duration-700 group ${idx === 0 || idx === 4 ? 'md:col-span-2' : ''}`}
                                     >
-                                        {idx !== roadmap.steps.length - 1 && (
-                                            <div className='absolute left-[39px] top-20 bottom-[-60px] w-[1px] bg-white/10' />
-                                        )}
-                                        <div className='absolute left-0 top-0 w-20 h-20 rounded-[2.5rem] bg-zinc-900 border border-white/10 flex items-center justify-center z-10 shadow-2xl group hover:border-primary transition-colors duration-700'>
-                                            <span className='text-white font-bold text-2xl'>{idx + 1}</span>
-                                        </div>
-                                        
-                                        <div className='bg-zinc-900/50 backdrop-blur-3xl p-12 rounded-[3.5rem] border border-white/5 shadow-sm hover:border-white/10 transition-all duration-1000 group'>
-                                            <div className='flex items-center justify-between mb-10'>
-                                                <h3 className='text-3xl font-bold text-white tracking-tight group-hover:text-primary transition-colors'>{step.title}</h3>
-                                                <div className='flex items-center gap-2 text-primary bg-primary/10 px-5 py-2 rounded-2xl text-[10px] font-bold uppercase tracking-[0.2em]'>
-                                                    <Clock size={14} />
-                                                    {step.duration}
+                                        <div className='flex items-center justify-between mb-8'>
+                                            <div className='flex items-center gap-4'>
+                                                <div className='w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-black'>
+                                                    {idx + 1}
+                                                </div>
+                                                <div>
+                                                    <h3 className='font-bold text-white text-lg'>{step.title}</h3>
+                                                    <span className='text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]'>{step.duration}</span>
                                                 </div>
                                             </div>
-                                            <p className='text-lg text-white/40 font-medium mb-12 leading-relaxed'>{step.desc}</p>
-                                            
-                                            <div className='grid md:grid-cols-2 gap-12'>
-                                                <div className='p-10 rounded-[2.5rem] bg-white/5 border border-white/5'>
-                                                    <h4 className='text-[10px] font-bold uppercase tracking-[0.4em] text-white/20 mb-8 flex items-center gap-2'>
-                                                        <BookOpen size={14} className='text-primary' /> Curriculum
-                                                    </h4>
-                                                    <ul className='space-y-5'>
-                                                        {step.courses.map((c, i) => (
-                                                            <li key={i} className='flex items-center gap-4 text-sm font-bold text-white/60 hover:text-primary cursor-pointer transition-colors'>
-                                                                <ChevronRight size={16} className='text-primary/40' />
-                                                                {c}
-                                                            </li>
-                                                        ))}
-                                                    </ul>
+                                            <CheckCircle2 className='w-6 h-6 text-white/5 group-hover:text-primary transition-colors' />
+                                        </div>
+
+                                        <p className='text-sm text-white/40 font-medium mb-8 leading-relaxed'>{step.desc}</p>
+
+                                        <div className='space-y-6'>
+                                            <div>
+                                                <h4 className='text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mb-3 flex items-center gap-2'>
+                                                    <BookOpen className='w-3 h-3' /> Resources
+                                                </h4>
+                                                <div className='flex flex-wrap gap-2'>
+                                                    {step.courses.map((course, i) => (
+                                                        <span key={i} className='px-3 py-1 rounded-lg bg-white/5 border border-white/5 text-[10px] font-bold text-white/60'>{course}</span>
+                                                    ))}
                                                 </div>
-                                                <div className='p-10 rounded-[2.5rem] bg-white/5 border border-white/5'>
-                                                    <h4 className='text-[10px] font-bold uppercase tracking-[0.4em] text-white/20 mb-8 flex items-center gap-2'>
-                                                        <CheckCircle2 size={14} className='text-emerald-500' /> Core Competencies
-                                                    </h4>
-                                                    <div className='flex flex-wrap gap-4'>
-                                                        {step.skills.map((s, i) => (
-                                                            <span key={i} className='px-5 py-2 bg-zinc-800 text-white/60 rounded-xl text-[10px] font-bold uppercase tracking-widest border border-white/5 shadow-xl'>
-                                                                {s}
-                                                            </span>
-                                                        ))}
-                                                    </div>
+                                            </div>
+                                            <div>
+                                                <h4 className='text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mb-3 flex items-center gap-2'>
+                                                    <Target className='w-3 h-3' /> Skills
+                                                </h4>
+                                                <div className='flex flex-wrap gap-2'>
+                                                    {step.skills.map((skill, i) => (
+                                                        <span key={i} className='px-3 py-1 rounded-lg bg-primary/10 text-[10px] font-bold text-primary'>{skill}</span>
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
                                     </motion.div>
                                 ))}
-                            </div>
-
-                            {/* Summary Sidebar */}
-                            <div className='lg:col-span-4'>
-                                <div className='bg-zinc-900 p-12 rounded-[4rem] text-white sticky top-40 shadow-2xl border border-white/5'>
-                                    <div className='flex items-center gap-6 mb-16'>
-                                        <div className='w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-primary/20'>
-                                            <Rocket className='h-8 w-8 text-white' />
-                                        </div>
-                                        <div>
-                                            <h3 className='text-2xl font-bold tracking-tight'>Success Path</h3>
-                                            <p className='text-primary text-[10px] font-bold uppercase tracking-[0.3em] mt-1'>{roadmap.duration} Estimate</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className='space-y-12'>
-                                        <div>
-                                            <div className='flex justify-between text-[10px] font-bold uppercase tracking-[0.4em] mb-5'>
-                                                <span className='text-white/20'>Momentum</span>
-                                                <span className='text-primary'>Initializing</span>
-                                            </div>
-                                            <div className='w-full bg-white/5 h-4 rounded-full overflow-hidden border border-white/5'>
-                                                <motion.div 
-                                                    initial={{ width: 0 }}
-                                                    animate={{ width: '15%' }}
-                                                    className='h-full bg-gradient-to-r from-primary to-blue-600 rounded-full' 
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className='p-10 rounded-[3rem] bg-white/5 border border-white/5'>
-                                            <h4 className='text-[10px] font-bold uppercase tracking-[0.4em] text-white/20 mb-8'>Strategist's Log</h4>
-                                            <ul className='space-y-8'>
-                                                <li className='flex gap-5 text-sm text-white/60 font-medium leading-relaxed'>
-                                                    <div className='w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center shrink-0'><CheckCircle2 size={16} className='text-primary' /></div>
-                                                    Build proof-of-work systems for every milestone.
-                                                </li>
-                                                <li className='flex gap-5 text-sm text-white/60 font-medium leading-relaxed'>
-                                                    <div className='w-6 h-6 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0'><CheckCircle2 size={16} className='text-blue-400' /></div>
-                                                    Engage with architects in your target industry.
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <Button className='w-full h-16 rounded-[2rem] bg-white hover:bg-white/90 text-black font-bold text-xs uppercase tracking-[0.3em] shadow-2xl transition-all active:scale-95'>
-                                            Export Strategy
-                                        </Button>
-                                    </div>
-                                </div>
                             </div>
                         </motion.div>
                     )}
