@@ -15,7 +15,7 @@ const salariesData = [
 
 const Salaries = () => {
     return (
-        <div className='bg-[#0a0a0a] min-h-screen font-sans'>
+        <div className="bg-[#0a0a0a] min-h-screen text-white overflow-hidden">
             <Navbar />
             <div className='noise-bg' />
             <div className='max-w-7xl mx-auto pt-32 px-6 pb-20 relative z-10'>

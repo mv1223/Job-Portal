@@ -32,8 +32,8 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-[#ebebeb] px-8 lg:px-16 h-[78px] flex items-center justify-between shadow-sm">
-
+        <nav className='sticky top-0 z-[100] bg-black border-b border-[#111] px-10 h-[60px] flex items-center justify-between backdrop-blur-xl'>
+        
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2">
                 <h1 className="text-[28px] font-extrabold tracking-tight text-[#111827]">
