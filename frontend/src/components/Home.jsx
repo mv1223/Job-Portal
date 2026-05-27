@@ -22,10 +22,18 @@ const Home = () => {
   return (
     <div className='bg-white overflow-hidden'>
       <Navbar />
-      <HeroSection />
-      <CategoryCarousel />
-      <LatestJobs />
-      <Testimonials />
+      <div className='space-y-0'>
+        <HeroSection />
+        <div className='bg-gradient-to-b from-white to-slate-50 py-10'>
+          <CategoryCarousel />
+        </div>
+        <div className='bg-white py-10'>
+          <LatestJobs />
+        </div>
+        <div className='bg-slate-50 py-10'>
+          <Testimonials />
+        </div>
+      </div>
       
       {/* Stats Section */}
       <div className='bg-slate-900 py-24 text-white'>

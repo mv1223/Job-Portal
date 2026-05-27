@@ -10,11 +10,10 @@ import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading } from '@/redux/authSlice'
-import { Loader2 } from 'lucide-react'
+import { Loader2, UserPlus, ShieldCheck, Rocket, Search, Briefcase, Trophy, Clock } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const Signup = () => {
-
     const [input, setInput] = useState({
         fullname: "",
         email: "",
@@ -35,7 +34,7 @@ const Signup = () => {
     }
     const submitHandler = async (e) => {
         e.preventDefault();
-        const formData = new FormData();    //formdata object
+        const formData = new FormData();
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
         formData.append("phoneNumber", input.phoneNumber);
@@ -68,130 +67,165 @@ const Signup = () => {
             navigate("/");
         }
     },[])
+
     return (
-        <div className='bg-[#F8FAFC] min-h-screen'>
+        <div className='bg-white min-h-screen flex flex-col'>
             <Navbar />
-            <div className='flex items-center justify-center max-w-7xl mx-auto px-4 py-20'>
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className='w-full max-w-2xl'
-                >
-                    <form onSubmit={submitHandler} className='bg-white border border-slate-100 rounded-[2.5rem] p-12 shadow-xl shadow-slate-200/50'>
-                        <div className='text-center mb-12'>
-                            <h1 className='font-black text-4xl text-slate-900 mb-2'>Create Account</h1>
-                            <p className='text-slate-500 font-medium'>Join our community of professionals</p>
-                        </div>
-
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                            <div className='space-y-2'>
-                                <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</Label>
-                                <Input
-                                    type="text"
-                                    value={input.fullname}
-                                    name="fullname"
-                                    onChange={changeEventHandler}
-                                    placeholder="John Doe"
-                                    className="h-12 rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold"
-                                />
+            <div className='flex-1 flex'>
+                {/* Left Side: Animated Content */}
+                <div className='hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-600 via-blue-600 to-emerald-500 items-center justify-center p-20 relative overflow-hidden'>
+                    <div className='absolute inset-0 pointer-events-none'>
+                        <motion.div 
+                            animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
+                            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                            className='absolute top-[-20%] left-[-20%] w-[100%] h-[100%] border-[60px] border-white/5 rounded-[4rem]'
+                        />
+                    </div>
+                    
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1 }}
+                        className='text-center text-white relative z-10'
+                    >
+                        <motion.div 
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                            className='bg-white/10 backdrop-blur-md p-10 rounded-[3rem] border border-white/20 mb-10 inline-block shadow-2xl'
+                        >
+                            <UserPlus size={80} className='text-white' />
+                        </motion.div>
+                        <h2 className='text-5xl font-black mb-6'>Join the Journey</h2>
+                        <p className='text-xl text-white/80 font-medium max-w-md mx-auto'>Create your profile today and unlock personalized job matches, AI career tools, and more.</p>
+                        
+                        <div className='mt-12 flex items-center justify-center gap-6'>
+                            <div className='flex flex-col items-center gap-2'>
+                                <div className='w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/10'><ShieldCheck size={24} /></div>
+                                <span className='text-[10px] font-bold uppercase tracking-widest'>Secure</span>
                             </div>
-                            <div className='space-y-2'>
-                                <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Email Address</Label>
-                                <Input
-                                    type="email"
-                                    value={input.email}
-                                    name="email"
-                                    onChange={changeEventHandler}
-                                    placeholder="john@example.com"
-                                    className="h-12 rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold"
-                                />
-                            </div>
-                            <div className='space-y-2'>
-                                <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Phone Number</Label>
-                                <Input
-                                    type="text"
-                                    value={input.phoneNumber}
-                                    name="phoneNumber"
-                                    onChange={changeEventHandler}
-                                    placeholder="+91 8080808080"
-                                    className="h-12 rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold"
-                                />
-                            </div>
-                            <div className='space-y-2'>
-                                <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Password</Label>
-                                <Input
-                                    type="password"
-                                    value={input.password}
-                                    name="password"
-                                    onChange={changeEventHandler}
-                                    placeholder="••••••••"
-                                    className="h-12 rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold"
-                                />
+                            <div className='flex flex-col items-center gap-2'>
+                                <div className='w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/10'><Rocket size={24} /></div>
+                                <span className='text-[10px] font-bold uppercase tracking-widest'>Fast</span>
                             </div>
                         </div>
+                    </motion.div>
 
-                        <div className='mt-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8'>
-                            <div className='space-y-4'>
-                                <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Select Your Role</Label>
-                                <RadioGroup className="flex items-center gap-4">
-                                    <div className="flex items-center space-x-2 bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-100 cursor-pointer hover:border-indigo-100 transition-all">
-                                        <Input
-                                            type="radio"
-                                            name="role"
-                                            value="student"
-                                            checked={input.role === 'student'}
-                                            onChange={changeEventHandler}
-                                            className="h-4 w-4 cursor-pointer accent-indigo-600"
-                                        />
-                                        <Label className="font-bold text-xs text-slate-600 cursor-pointer">Student</Label>
-                                    </div>
-                                    <div className="flex items-center space-x-2 bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-100 cursor-pointer hover:border-indigo-100 transition-all">
-                                        <Input
-                                            type="radio"
-                                            name="role"
-                                            value="recruiter"
-                                            checked={input.role === 'recruiter'}
-                                            onChange={changeEventHandler}
-                                            className="h-4 w-4 cursor-pointer accent-indigo-600"
-                                        />
-                                        <Label className="font-bold text-xs text-slate-600 cursor-pointer">Recruiter</Label>
-                                    </div>
-                                </RadioGroup>
+                    {/* Floating icons */}
+                    <motion.div animate={{ y: [0, 30, 0], rotate: [0, 15, 0] }} transition={{ duration: 7, repeat: Infinity }} className='absolute top-20 left-20 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10'><Search className='text-white' /></motion.div>
+                    <motion.div animate={{ y: [0, -40, 0], rotate: [0, -10, 0] }} transition={{ duration: 9, repeat: Infinity }} className='absolute bottom-20 right-20 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10'><Briefcase className='text-white' /></motion.div>
+                    <motion.div animate={{ scale: [1, 1.3, 1], x: [0, 20, 0] }} transition={{ duration: 6, repeat: Infinity }} className='absolute top-1/2 left-5 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10'><Trophy className='text-white' /></motion.div>
+                    <motion.div animate={{ rotate: -360 }} transition={{ duration: 12, repeat: Infinity, ease: "linear" }} className='absolute top-1/2 right-5 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10'><Clock className='text-white' /></motion.div>
+                </div>
+
+                {/* Right Side: Signup Form */}
+                <div className='w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-50/50 overflow-y-auto'>
+                    <motion.div 
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className='w-full max-w-2xl'
+                    >
+                        <form onSubmit={submitHandler} className='bg-white border border-slate-100 rounded-[3rem] p-12 shadow-2xl shadow-indigo-100 my-10'>
+                            <div className='text-center mb-10'>
+                                <h1 className='font-black text-4xl text-slate-900 mb-2'>Create Account</h1>
+                                <p className='text-slate-500 font-medium'>Join our community of professionals</p>
                             </div>
-                            
-                            <div className='space-y-4 w-full md:w-auto'>
-                                <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Profile Photo</Label>
-                                <div className='flex items-center gap-3 bg-slate-50 p-2 rounded-xl border border-slate-100'>
+
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                                <div className='space-y-2'>
+                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</Label>
+                                    <Input
+                                        type="text"
+                                        value={input.fullname}
+                                        name="fullname"
+                                        onChange={changeEventHandler}
+                                        placeholder="John Doe"
+                                        className="h-14 rounded-2xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold px-6"
+                                    />
+                                </div>
+                                <div className='space-y-2'>
+                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Email Address</Label>
+                                    <Input
+                                        type="email"
+                                        value={input.email}
+                                        name="email"
+                                        onChange={changeEventHandler}
+                                        placeholder="name@example.com"
+                                        className="h-14 rounded-2xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold px-6"
+                                    />
+                                </div>
+                                <div className='space-y-2'>
+                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Phone Number</Label>
+                                    <Input
+                                        type="text"
+                                        value={input.phoneNumber}
+                                        name="phoneNumber"
+                                        onChange={changeEventHandler}
+                                        placeholder="1234567890"
+                                        className="h-14 rounded-2xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold px-6"
+                                    />
+                                </div>
+                                <div className='space-y-2'>
+                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Password</Label>
+                                    <Input
+                                        type="password"
+                                        value={input.password}
+                                        name="password"
+                                        onChange={changeEventHandler}
+                                        placeholder="••••••••"
+                                        className="h-14 rounded-2xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold px-6"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='mt-8 space-y-6'>
+                                <div>
+                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1 block mb-4">Select Your Role</Label>
+                                    <RadioGroup className="flex items-center gap-4">
+                                        <div className="flex items-center space-x-2 bg-slate-50 px-6 py-4 rounded-2xl border border-slate-100 cursor-pointer hover:border-indigo-100 transition-all flex-1">
+                                            <Input
+                                                type="radio"
+                                                name="role"
+                                                value="student"
+                                                checked={input.role === 'student'}
+                                                onChange={changeEventHandler}
+                                                className="cursor-pointer w-4 h-4 accent-indigo-600"
+                                            />
+                                            <Label className="font-bold text-slate-600 cursor-pointer">Student</Label>
+                                        </div>
+                                        <div className="flex items-center space-x-2 bg-slate-50 px-6 py-4 rounded-2xl border border-slate-100 cursor-pointer hover:border-indigo-100 transition-all flex-1">
+                                            <Input
+                                                type="radio"
+                                                name="role"
+                                                value="recruiter"
+                                                checked={input.role === 'recruiter'}
+                                                onChange={changeEventHandler}
+                                                className="cursor-pointer w-4 h-4 accent-indigo-600"
+                                            />
+                                            <Label className="font-bold text-slate-600 cursor-pointer">Recruiter</Label>
+                                        </div>
+                                    </RadioGroup>
+                                </div>
+
+                                <div className='space-y-2'>
+                                    <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Profile Photo</Label>
                                     <Input
                                         accept="image/*"
                                         type="file"
                                         onChange={changeFileHandler}
-                                        className="cursor-pointer border-none bg-transparent shadow-none h-auto file:bg-indigo-600 file:text-white file:rounded-lg file:border-none file:px-4 file:py-1.5 file:font-bold file:text-xs"
+                                        className="h-14 rounded-2xl border-slate-200 focus-visible:ring-indigo-500 bg-slate-50/50 font-bold px-6 pt-3"
                                     />
                                 </div>
+
+                                {
+                                    loading ? <Button className="w-full h-14 rounded-2xl bg-indigo-600"><Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait</Button> : <Button type="submit" className="w-full h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-700 font-black text-lg shadow-xl shadow-indigo-100 transition-all active:scale-95">Signup</Button>
+                                }
+                                <div className='text-center pt-4'>
+                                    <span className='text-slate-500 font-bold text-sm'>Already have an account? <Link to="/login" className='text-indigo-600 hover:underline'>Login</Link></span>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className='mt-12'>
-                            {
-                                loading ? (
-                                    <Button className='w-full h-14 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2'>
-                                        <Loader2 className='mr-2 h-4 w-4 animate-spin' /> 
-                                        Creating Account...
-                                    </Button>
-                                ) : (
-                                    <Button type="submit" className='w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all active:scale-[0.98] shadow-xl shadow-slate-200'>
-                                        Get Started
-                                    </Button>
-                                )
-                            }
-                        </div>
-
-                        <p className='text-center text-sm font-medium text-slate-500 mt-8'>
-                            Already have an account? <Link to="/login" className='text-indigo-600 font-black hover:underline ml-1'>Sign In</Link>
-                        </p>
-                    </form>
-                </motion.div>
+                        </form>
+                    </motion.div>
+                </div>
             </div>
         </div>
     )
