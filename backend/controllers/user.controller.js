@@ -89,11 +89,16 @@ export const login = async (req, res) => {
         const tokenData = {
             userId: user._id
         }
-        const token = await jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
+        const token = jwt.sign(tokenData, process.env.SECRET_KEY || "default_secret", { expiresIn: '1d' });
 
         // Update last login
-        user.lastLogin = new Date();
-        await user.save();
+        try {
+            user.lastLogin = new Date();
+            await user.save();
+        } catch (saveError) {
+            console.log("Error saving lastLogin:", saveError);
+            // Continue even if lastLogin save fails
+        }
 
         user = {
             _id: user._id,
