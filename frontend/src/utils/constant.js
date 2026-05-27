@@ -1,4 +1,4 @@
-const BASE_URL = "https://job-portal-fufe.onrender.com";
+const BASE_URL = import.meta.env.VITE_API_URL || "https://job-portal-fufe.onrender.com";
 
 export const USER_API_END_POINT = `${BASE_URL}/api/v1/user`;
 export const JOB_API_END_POINT = `${BASE_URL}/api/v1/job`;
