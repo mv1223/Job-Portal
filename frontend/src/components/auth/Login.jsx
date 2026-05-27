@@ -60,49 +60,29 @@ const Login = () => {
         }
     },[])
     return (
-        <div className='bg-black min-h-screen flex flex-col selection:bg-primary selection:text-white'>
+        <div className='bg-[#0a0a0a] min-h-screen flex flex-col selection:bg-primary selection:text-white'>
             <Navbar />
             <div className='noise-bg' />
             <div className='flex-1 flex relative z-10'>
-                {/* Left Side: Animated Illustration */}
-                <div className='hidden lg:flex lg:w-1/2 bg-zinc-950 items-center justify-center p-20 relative overflow-hidden border-r border-white/5'>
-                    <div className='absolute inset-0 pointer-events-none'>
-                        <motion.div 
-                            animate={{ 
-                                scale: [1, 1.2, 1],
-                                rotate: [0, 90, 0],
-                            }}
-                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                            className='absolute top-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-primary/10 blur-[120px]'
-                        />
+                {/* Left Side: Brand Content */}
+                <div className='hidden lg:flex lg:w-1/2 bg-[#0a0a0a] items-center justify-center p-20 relative overflow-hidden border-r border-[#1a1a1a]'>
+                    <div className='absolute inset-0 pointer-events-none opacity-20'>
+                        <div className='absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px]' />
                     </div>
                     
                     <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1 }}
                         className='text-center text-white relative z-10'
                     >
-                        <motion.div 
-                            animate={{ y: [0, -20, 0] }}
-                            transition={{ duration: 4, repeat: Infinity }}
-                            className='bg-white/5 backdrop-blur-3xl p-10 rounded-[3rem] border border-white/10 mb-10 inline-block shadow-2xl'
-                        >
-                            <Sparkles size={80} className='text-primary animate-pulse' />
-                        </motion.div>
-                        <h2 className='text-6xl font-black mb-6 tracking-tighter'>Welcome Back</h2>
-                        <p className='text-xl text-white/40 font-medium max-w-md mx-auto leading-relaxed'>Continue your professional journey with our neural-matching intelligence.</p>
+                        <h2 className='text-6xl font-bold mb-6 tracking-tighter leading-tight'>Welcome Back to<br /><em className='not-italic text-primary'>HireSync</em></h2>
+                        <p className='text-lg text-[#666] font-medium max-w-md mx-auto leading-relaxed'>Continue your professional journey with our neural-matching intelligence.</p>
                     </motion.div>
-
-                    {/* Floating elements */}
-                    <div className='absolute bottom-20 left-10 flex gap-4'>
-                        <div className='px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/40'>AI Powered</div>
-                        <div className='px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/40'>Real-time Tracking</div>
-                    </div>
                 </div>
 
                 {/* Right Side: Login Form */}
-                <div className='w-full lg:w-1/2 flex items-center justify-center p-8 md:p-20 bg-black'>
+                <div className='w-full lg:w-1/2 flex items-center justify-center p-8 md:p-20 bg-[#0a0a0a]'>
                     <motion.div 
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -111,40 +91,38 @@ const Login = () => {
                     >
                         <div className='mb-12'>
                             <h3 className='text-4xl font-bold text-white mb-2 tracking-tighter'>Sign In</h3>
-                            <p className='text-white/40 font-medium'>Access your dashboard and applications.</p>
+                            <p className='text-[#555] font-medium'>Access your dashboard and applications.</p>
                         </div>
 
                         <form onSubmit={submitHandler} className='space-y-6'>
                             <div className='space-y-2'>
-                                <Label className="text-white/60">Email Address</Label>
-                                <div className='relative group'>
-                                    <Input
-                                        type="email"
-                                        value={input.email}
-                                        name="email"
-                                        onChange={changeEventHandler}
-                                        placeholder="name@company.com"
-                                        className="bg-zinc-900/50 border-white/5 h-14 px-6 rounded-2xl text-white placeholder:text-white/10 focus:ring-primary focus:border-primary transition-all"
-                                    />
-                                </div>
+                                <Label className="text-[#888] text-[13px] font-medium uppercase tracking-widest">Email Address</Label>
+                                <Input
+                                    type="email"
+                                    value={input.email}
+                                    name="email"
+                                    onChange={changeEventHandler}
+                                    placeholder="name@company.com"
+                                    className="bg-[#111] border-[#2a2a2a] h-12 px-6 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
+                                />
                             </div>
 
                             <div className='space-y-2'>
-                                <Label className="text-white/60">Password</Label>
+                                <Label className="text-[#888] text-[13px] font-medium uppercase tracking-widest">Password</Label>
                                 <Input
                                     type="password"
                                     value={input.password}
                                     name="password"
                                     onChange={changeEventHandler}
                                     placeholder="••••••••"
-                                    className="bg-zinc-900/50 border-white/5 h-14 px-6 rounded-2xl text-white placeholder:text-white/10 focus:ring-primary focus:border-primary transition-all"
+                                    className="bg-[#111] border-[#2a2a2a] h-12 px-6 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
                                 />
                             </div>
 
                             <div className='space-y-4'>
-                                <Label className="text-white/60">I am a</Label>
+                                <Label className="text-[#888] text-[13px] font-medium uppercase tracking-widest">I am a</Label>
                                 <div className='grid grid-cols-2 gap-4'>
-                                    <label className={`flex items-center justify-center p-4 rounded-2xl border cursor-pointer transition-all ${input.role === 'student' ? 'bg-primary/10 border-primary text-primary' : 'bg-zinc-900/50 border-white/5 text-white/40 hover:border-white/10'}`}>
+                                    <label className={`flex items-center justify-center p-4 rounded-xl border cursor-pointer transition-all ${input.role === 'student' ? 'bg-primary/10 border-primary text-primary' : 'bg-[#111] border-[#2a2a2a] text-[#555] hover:border-[#444]'}`}>
                                         <input
                                             type="radio"
                                             name="role"
@@ -153,9 +131,9 @@ const Login = () => {
                                             onChange={changeEventHandler}
                                             className="hidden"
                                         />
-                                        <span className='font-bold text-[10px] uppercase tracking-widest'>Student</span>
+                                        <span className='font-bold text-[11px] uppercase tracking-widest'>Student</span>
                                     </label>
-                                    <label className={`flex items-center justify-center p-4 rounded-2xl border cursor-pointer transition-all ${input.role === 'recruiter' ? 'bg-primary/10 border-primary text-primary' : 'bg-zinc-900/50 border-white/5 text-white/40 hover:border-white/10'}`}>
+                                    <label className={`flex items-center justify-center p-4 rounded-xl border cursor-pointer transition-all ${input.role === 'recruiter' ? 'bg-primary/10 border-primary text-primary' : 'bg-[#111] border-[#2a2a2a] text-[#555] hover:border-[#444]'}`}>
                                         <input
                                             type="radio"
                                             name="role"
@@ -164,24 +142,24 @@ const Login = () => {
                                             onChange={changeEventHandler}
                                             className="hidden"
                                         />
-                                        <span className='font-bold text-[10px] uppercase tracking-widest'>Recruiter</span>
+                                        <span className='font-bold text-[11px] uppercase tracking-widest'>Recruiter</span>
                                     </label>
                                 </div>
                             </div>
 
                             {
                                 loading ? (
-                                    <Button disabled className="w-full bg-primary h-14 rounded-2xl text-white font-bold uppercase tracking-widest shadow-xl shadow-primary/20">
+                                    <Button disabled className="w-full bg-primary h-12 rounded-xl text-white font-bold uppercase tracking-widest">
                                         <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Authenticating
                                     </Button>
                                 ) : (
-                                    <Button type="submit" className="w-full bg-primary hover:bg-primary/90 h-14 rounded-2xl text-white font-bold uppercase tracking-widest shadow-xl shadow-primary/20 transition-all active:scale-95">
+                                    <Button type="submit" className="w-full bg-primary hover:bg-[#5558e8] h-12 rounded-xl text-white font-bold uppercase tracking-widest transition-all active:scale-95">
                                         Sign In
                                     </Button>
                                 )
                             }
                             
-                            <p className='text-center text-sm text-white/40 font-medium'>
+                            <p className='text-center text-sm text-[#555] font-medium'>
                                 New here? <Link to="/signup" className='text-primary hover:underline'>Create an account</Link>
                             </p>
                         </form>

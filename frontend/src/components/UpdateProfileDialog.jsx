@@ -71,79 +71,88 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     return (
         <div>
             <Dialog open={open}>
-                <DialogContent className="sm:max-w-[425px]" onInteractOutside={() => setOpen(false)}>
-                    <DialogHeader>
-                        <DialogTitle>Update Profile</DialogTitle>
+                <DialogContent className="sm:max-w-[425px] bg-[#0e0e0e] border-[#1a1a1a] text-white rounded-3xl p-8" onInteractOutside={() => setOpen(false)}>
+                    <DialogHeader className="mb-6">
+                        <DialogTitle className="text-2xl font-bold tracking-tighter">Update Profile</DialogTitle>
                     </DialogHeader>
-                    <form onSubmit={submitHandler}>
-                        <div className='grid gap-4 py-4'>
-                            <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="name" className="text-right">Name</Label>
+                    <form onSubmit={submitHandler} className='space-y-6'>
+                        <div className='space-y-4'>
+                            <div className='space-y-2'>
+                                <Label htmlFor="name" className="text-[#888] text-[11px] font-bold uppercase tracking-widest">Full Name</Label>
                                 <Input
                                     id="name"
-                                    name="name"
+                                    name="fullname"
                                     type="text"
                                     value={input.fullname}
                                     onChange={changeEventHandler}
-                                    className="col-span-3"
+                                    className="bg-[#111] border-[#2a2a2a] h-11 px-4 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
                                 />
                             </div>
-                            <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="email" className="text-right">Email</Label>
+                            <div className='space-y-2'>
+                                <Label htmlFor="email" className="text-[#888] text-[11px] font-bold uppercase tracking-widest">Email Address</Label>
                                 <Input
                                     id="email"
                                     name="email"
                                     type="email"
                                     value={input.email}
                                     onChange={changeEventHandler}
-                                    className="col-span-3"
+                                    className="bg-[#111] border-[#2a2a2a] h-11 px-4 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
                                 />
                             </div>
-                            <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="number" className="text-right">Number</Label>
+                            <div className='space-y-2'>
+                                <Label htmlFor="number" className="text-[#888] text-[11px] font-bold uppercase tracking-widest">Phone Number</Label>
                                 <Input
                                     id="number"
-                                    name="number"
+                                    name="phoneNumber"
                                     value={input.phoneNumber}
                                     onChange={changeEventHandler}
-                                    className="col-span-3"
+                                    className="bg-[#111] border-[#2a2a2a] h-11 px-4 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
                                 />
                             </div>
-                            <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="bio" className="text-right">Bio</Label>
+                            <div className='space-y-2'>
+                                <Label htmlFor="bio" className="text-[#888] text-[11px] font-bold uppercase tracking-widest">Short Bio</Label>
                                 <Input
                                     id="bio"
                                     name="bio"
                                     value={input.bio}
                                     onChange={changeEventHandler}
-                                    className="col-span-3"
+                                    className="bg-[#111] border-[#2a2a2a] h-11 px-4 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
                                 />
                             </div>
-                            <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="skills" className="text-right">Skills</Label>
+                            <div className='space-y-2'>
+                                <Label htmlFor="skills" className="text-[#888] text-[11px] font-bold uppercase tracking-widest">Skills (comma separated)</Label>
                                 <Input
                                     id="skills"
                                     name="skills"
                                     value={input.skills}
                                     onChange={changeEventHandler}
-                                    className="col-span-3"
+                                    placeholder="React, Node.js, Tailwind"
+                                    className="bg-[#111] border-[#2a2a2a] h-11 px-4 rounded-xl text-white placeholder:text-[#444] focus:ring-primary focus:border-primary transition-all font-sans"
                                 />
                             </div>
-                            <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="file" className="text-right">Resume</Label>
+                            <div className='space-y-2'>
+                                <Label htmlFor="file" className="text-[#888] text-[11px] font-bold uppercase tracking-widest">Update Resume (PDF)</Label>
                                 <Input
                                     id="file"
                                     name="file"
                                     type="file"
                                     accept="application/pdf"
                                     onChange={fileChangeHandler}
-                                    className="col-span-3"
+                                    className="bg-[#111] border-[#2a2a2a] h-11 rounded-xl text-white file:bg-primary file:text-white file:border-none file:px-4 file:py-1 file:rounded-lg file:mr-4 file:cursor-pointer hover:file:bg-primary/90 transition-all cursor-pointer font-sans"
                                 />
                             </div>
                         </div>
-                        <DialogFooter>
+                        <DialogFooter className="pt-4">
                             {
-                                loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Update</Button>
+                                loading ? (
+                                    <Button disabled className="w-full bg-primary h-12 rounded-xl text-white font-bold uppercase tracking-widest">
+                                        <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Processing
+                                    </Button>
+                                ) : (
+                                    <Button type="submit" className="w-full bg-primary hover:bg-[#5558e8] h-12 rounded-xl text-white font-bold uppercase tracking-widest transition-all active:scale-95 shadow-xl shadow-primary/20">
+                                        Save Changes
+                                    </Button>
+                                )
                             }
                         </DialogFooter>
                     </form>

@@ -82,29 +82,39 @@ const Navbar = () => {
                                             </Avatar>
                                         </div>
                                     </PopoverTrigger>
-                                    <PopoverContent className="w-64 mt-4 p-0 rounded-2xl overflow-hidden shadow-2xl border-white/5 bg-zinc-950">
-                                        <div className='p-6 border-b border-white/5'>
+                                    <PopoverContent className="w-64 mt-4 p-0 rounded-2xl overflow-hidden shadow-2xl border border-[#1a1a1a] bg-[#0e0e0e]">
+                                        <div className='p-6 border-b border-[#1a1a1a]'>
                                             <div className='flex items-center gap-4 mb-4'>
-                                                <Avatar className="h-10 w-10 rounded-xl">
-                                                    <AvatarImage src={user?.profile?.profilePhoto} alt="@user" />
-                                                </Avatar>
+                                                <div className='p-0.5 rounded-lg border border-white/10 bg-white/5'>
+                                                    <Avatar className="h-10 w-10 rounded-lg">
+                                                        <AvatarImage src={user?.profile?.profilePhoto} alt="@user" />
+                                                    </Avatar>
+                                                </div>
                                                 <div>
                                                     <h4 className='font-bold text-white text-sm'>{user?.fullname}</h4>
-                                                    <p className='text-[10px] font-bold text-white/20 uppercase tracking-widest'>{user?.role}</p>
+                                                    <p className='text-[10px] font-bold text-[#444] uppercase tracking-widest'>{user?.role}</p>
                                                 </div>
                                             </div>
                                             <div className='flex flex-col gap-1'>
                                                 {
                                                     user && user.role === 'student' && (
                                                         <Link to="/profile" className='flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors group'>
-                                                            <User2 className="w-4 h-4 text-white/40 group-hover:text-primary transition-colors" />
-                                                            <span className='text-xs font-bold text-white/60 group-hover:text-white transition-colors'>View Profile</span>
+                                                            <User2 className="w-4 h-4 text-[#444] group-hover:text-primary transition-colors" />
+                                                            <span className='text-xs font-bold text-[#888] group-hover:text-white transition-colors'>View Profile</span>
+                                                        </Link>
+                                                    )
+                                                }
+                                                {
+                                                    user && user.role === 'recruiter' && (
+                                                        <Link to="/admin/companies" className='flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors group'>
+                                                            <Briefcase className="w-4 h-4 text-[#444] group-hover:text-primary transition-colors" />
+                                                            <span className='text-xs font-bold text-[#888] group-hover:text-white transition-colors'>Dashboard</span>
                                                         </Link>
                                                     )
                                                 }
                                                 <button onClick={logoutHandler} className='flex items-center gap-3 p-3 rounded-xl hover:bg-red-500/5 transition-colors group w-full text-left'>
-                                                    <LogOut className="w-4 h-4 text-white/40 group-hover:text-red-500 transition-colors" />
-                                                    <span className='text-xs font-bold text-white/60 group-hover:text-white transition-colors'>Sign Out</span>
+                                                    <LogOut className="w-4 h-4 text-[#444] group-hover:text-red-500 transition-colors" />
+                                                    <span className='text-xs font-bold text-[#888] group-hover:text-white transition-colors'>Sign Out</span>
                                                 </button>
                                             </div>
                                         </div>
