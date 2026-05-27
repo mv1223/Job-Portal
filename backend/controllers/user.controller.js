@@ -7,21 +7,21 @@ import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
     try {
+        console.log("Register Body:", req.body);
         const { fullname, email, phoneNumber, password, role } = req.body;
          
         if (!fullname || !email || !phoneNumber || !password || !role) {
             return res.status(400).json({
-                message: "Something is missing",
+                message: "Missing required fields: " + 
+                    (!fullname ? "fullname " : "") + 
+                    (!email ? "email " : "") + 
+                    (!phoneNumber ? "phoneNumber " : "") + 
+                    (!password ? "password " : "") + 
+                    (!role ? "role " : ""),
                 success: false
             });
         };
-        const file = req.file;
-        let cloudResponse;
-        if (file) {
-            const fileUri = getDataUri(file);
-            cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-        }
-
+        
         const user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({
@@ -38,7 +38,7 @@ export const register = async (req, res) => {
             password: hashedPassword,
             role,
             profile: {
-                profilePhoto: cloudResponse ? cloudResponse.secure_url : "",
+                profilePhoto: "",
             }
         });
 
@@ -47,9 +47,9 @@ export const register = async (req, res) => {
             success: true
         });
     } catch (error) {
-        console.log("Register Error:", error);
+        console.log("Register Error Details:", error);
         return res.status(500).json({
-            message: error.message || "Internal server error",
+            message: "Server error: " + error.message,
             success: false
         });
     }
