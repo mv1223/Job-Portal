@@ -31,13 +31,7 @@ const Navbar = () => {
         }
     }
     return (
-        <div className='fixed top-0 left-0 right-0 z-50 flex justify-center p-6'>
-            <motion.div 
-                initial={{ y: -100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className='w-full max-w-5xl h-16 bg-zinc-900/50 backdrop-blur-3xl border border-white/5 rounded-2xl shadow-2xl px-8 flex items-center justify-between'
-            >
+        <nav className='sticky top-0 z-[100] bg-[#0a0a0a]/95 backdrop-blur-[10px] border-b border-[#1a1a1a] px-10 h-[60px] flex items-center justify-between'>
                 <Link to="/" className='flex items-center gap-3 group'>
                     <h1 className='text-xl font-bold tracking-tighter text-white'>
                         Hire<span className='text-primary'>Sync</span>
@@ -45,7 +39,7 @@ const Navbar = () => {
                 </Link>
                 
                 <div className='flex items-center gap-8'>
-                    <ul className='hidden md:flex items-center gap-8 text-[12px] font-medium tracking-tight text-white/50'>
+                    <ul className='hidden md:flex items-center gap-8 text-[13px] font-normal text-[#888]'>
                         {
                             user && user.role === 'recruiter' ? (
                                 <>
@@ -54,10 +48,11 @@ const Navbar = () => {
                                 </>
                             ) : (
                                 <>
-                                    <li className='hover:text-white transition-colors'><Link to="/">Find Jobs</Link></li>
+                                    <li className='text-white'><Link to="/">Find Jobs</Link></li>
                                     <li className='hover:text-white transition-colors'><Link to="/jobs">Companies</Link></li>
                                     <li className='hover:text-white transition-colors'><Link to="/browse">Salaries</Link></li>
                                     <li className='hover:text-white transition-colors'><Link to="/">Career Advice</Link></li>
+                                    <li className='hover:text-white transition-colors'><Link to="/">For Employers</Link></li>
                                 </>
                             )
                         }
@@ -70,10 +65,10 @@ const Navbar = () => {
                             !user ? (
                                 <>
                                     <Link to="/login">
-                                        <Button variant="ghost" className="font-medium text-[13px] text-white/60 hover:text-white">Sign In</Button>
+                                        <Button variant="ghost" className="bg-transparent border border-[#2a2a2a] text-[#ccc] px-4 py-1.5 rounded-md text-[13px] font-medium hover:border-[#444] hover:text-white transition-all">Sign In</Button>
                                     </Link>
                                     <Link to="/signup">
-                                        <Button className="bg-primary hover:bg-primary/90 text-white px-5 h-9 rounded-md font-medium text-[13px] transition-all active:scale-95">
+                                        <Button className="bg-primary hover:bg-[#5558e8] text-white px-4 py-1.5 h-auto rounded-md text-[13px] font-medium transition-all">
                                             Post a Job
                                         </Button>
                                     </Link>
@@ -119,8 +114,7 @@ const Navbar = () => {
                         }
                     </div>
                 </div>
-            </motion.div>
-        </div>
+        </nav>
     )
 }
 

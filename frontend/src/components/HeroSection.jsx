@@ -44,51 +44,11 @@ const HeroSection = () => {
     }, []);
 
     return (
-        <div 
+        <section 
             ref={containerRef} 
-            onMouseMove={handleMouseMove}
-            className='relative overflow-hidden bg-black min-h-[95vh] flex items-center justify-center selection:bg-primary selection:text-white'
+            className='bg-[#0a0a0a] py-20 px-10'
         >
-            <GridBackground className="absolute inset-0">
-                <Spotlight
-                    className="-top-40 left-0 md:left-60 md:-top-20"
-                    fill="white"
-                />
-                
-                {/* High-end Cinematic Background */}
-                <div className='absolute inset-0 pointer-events-none'>
-                    <motion.div 
-                        animate={{ 
-                            scale: [1, 1.2, 1],
-                            rotate: [0, 90, 0],
-                            x: [0, 100, 0],
-                            y: [0, -50, 0]
-                        }}
-                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                        className='absolute top-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-gradient-to-r from-cyan-500/20 via-blue-600/20 to-indigo-700/20 blur-[120px]'
-                    />
-                    <motion.div 
-                        animate={{ 
-                            scale: [1, 1.3, 1],
-                            rotate: [0, -45, 0],
-                            x: [0, -80, 0],
-                            y: [0, 100, 0]
-                        }}
-                        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                        className='absolute bottom-[-30%] right-[-10%] w-[900px] h-[900px] rounded-full bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-rose-700/20 blur-[150px]'
-                    />
-                </div>
-            </GridBackground>
-
-            {/* Floating 3D Icons */}
-            <div className='absolute inset-0 pointer-events-none overflow-hidden z-0'>
-                <motion.div style={{ x: mousePos.x * 1.5, y: mousePos.y * 1.5 }} className='absolute top-1/4 left-1/4 opacity-20'><Briefcase size={40} className='text-primary' /></motion.div>
-                <motion.div style={{ x: -mousePos.x * 2, y: -mousePos.y * 2 }} className='absolute top-1/3 right-1/4 opacity-20'><Zap size={30} className='text-cyan-400' /></motion.div>
-                <motion.div style={{ x: mousePos.x * 2.5, y: -mousePos.y * 2.5 }} className='absolute bottom-1/4 left-1/3 opacity-20'><Trophy size={35} className='text-purple-500' /></motion.div>
-                <motion.div style={{ x: -mousePos.x * 1.8, y: mousePos.y * 1.8 }} className='absolute bottom-1/3 right-1/3 opacity-20'><Sparkles size={45} className='text-blue-500' /></motion.div>
-            </div>
-
-            <div className='max-w-4xl mx-auto px-6 relative z-10 text-center'>
+            <div className='max-w-4xl mx-auto text-center'>
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -159,7 +119,7 @@ const HeroSection = () => {
                     </div>
                 </motion.div>
             </div>
-        </div>
+        </section>
     )
 }
 

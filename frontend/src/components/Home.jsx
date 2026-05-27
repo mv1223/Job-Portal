@@ -81,6 +81,22 @@ const Home = () => {
         </div>
       </div>
 
+      <div className='border-b border-[#111] py-4 px-6 overflow-x-auto whitespace-nowrap scrollbar-hide'>
+        <div className='max-w-7xl mx-auto flex items-center gap-2'>
+          <span className='text-[12px] text-[#444] mr-2 font-medium'>Explore:</span>
+          {["All Jobs", "Engineering", "Design", "Product", "Marketing", "Data & AI", "Finance", "Operations", "Remote Only", "Internships"].map((tag, idx) => (
+            <button 
+              key={tag} 
+              className={`px-4 py-1.5 rounded-full text-[12px] font-medium transition-all ${
+                idx === 0 ? 'bg-primary text-white' : 'bg-[#111] border border-[#1e1e1e] text-[#777] hover:border-primary hover:text-white'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className='space-y-40 pb-40'>
         <div className='scroll-section'>
           <CategoryCarousel />
@@ -93,14 +109,14 @@ const Home = () => {
         </div>
 
         <div className='scroll-section px-6'>
-          <div className='max-w-7xl mx-auto bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl padding-10 p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10'>
+          <div className='max-w-7xl mx-auto bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10'>
             <div className='max-w-xl'>
-              <h2 className='text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight'>Ready to find your next challenge?</h2>
-              <p className='text-[#666] text-lg leading-relaxed'>Join over 1.4M+ candidates who have found their dream roles through HireSync.</p>
+              <h2 className='text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight'>Are you hiring? Post your role for free.</h2>
+              <p className='text-[#666] text-lg leading-relaxed'>Reach 2M+ active candidates. Your first job post is completely free — no credit card needed.</p>
             </div>
             <div className='flex items-center gap-4 shrink-0'>
-              <button className='bg-white text-black px-8 py-3 rounded-lg font-bold text-[14px] hover:bg-[#e5e5e5] transition-all'>Join Now</button>
-              <button className='bg-transparent border border-[#2a2a2a] text-[#ccc] px-8 py-3 rounded-lg font-bold text-[14px] hover:border-[#555] hover:text-white transition-all'>Post a Job</button>
+              <button className='bg-white text-black px-8 py-3 rounded-lg font-bold text-[14px] hover:bg-[#e5e5e5] transition-all'>Post a Job Free</button>
+              <button className='bg-transparent border border-[#2a2a2a] text-[#ccc] px-8 py-3 rounded-lg font-bold text-[14px] hover:border-[#555] hover:text-white transition-all'>See Pricing Plans</button>
             </div>
           </div>
         </div>

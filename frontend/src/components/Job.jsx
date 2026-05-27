@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from './ui/button'
+import { useNavigate } from 'react-router-dom'
 import { Bookmark, MapPin, Clock, Users } from 'lucide-react'
 
 const Job = ({job}) => {
