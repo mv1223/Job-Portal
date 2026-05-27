@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Navbar from './shared/Navbar'
 import HeroSection from './HeroSection'
 import CategoryCarousel from './CategoryCarousel'
@@ -8,55 +8,80 @@ import useGetAllJobs from '@/hooks/useGetAllJobs'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import Testimonials from './Testimonials'
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   useGetAllJobs();
   const { user } = useSelector(store => store.auth);
   const navigate = useNavigate();
+  const mainRef = useRef(null);
+
   useEffect(() => {
     if (user?.role === 'recruiter') {
       navigate("/admin/companies");
     }
-  }, []);
+
+    const ctx = gsap.context(() => {
+      // High-end scroll animations
+      const sections = gsap.utils.toArray('.scroll-section');
+      sections.forEach((section) => {
+        gsap.fromTo(section, 
+          { opacity: 0, y: 100, scale: 0.9, filter: "blur(10px)" },
+          { 
+            opacity: 1, y: 0, scale: 1, filter: "blur(0px)",
+            duration: 1.5,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              end: "bottom 20%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+      });
+
+      // Background color shift on scroll
+      gsap.to(mainRef.current, {
+        backgroundColor: "#09090b",
+        scrollTrigger: {
+          trigger: "body",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+        }
+      });
+    }, mainRef);
+
+    return () => ctx.revert();
+  }, [user, navigate]);
+
   return (
-    <div className='bg-black overflow-hidden selection:bg-primary selection:text-white'>
+    <div ref={mainRef} className='bg-black overflow-hidden selection:bg-primary selection:text-white transition-colors duration-1000'>
       <Navbar />
       <div className='noise-bg' />
       
-      <HeroSection />
+      <div className='scroll-section'>
+        <HeroSection />
+      </div>
 
-      <div className='space-y-32 pb-32'>
-        <CategoryCarousel />
-        <LatestJobs />
-        <Testimonials />
+      <div className='space-y-40 pb-40'>
+        <div className='scroll-section'>
+          <CategoryCarousel />
+        </div>
+        <div className='scroll-section'>
+          <LatestJobs />
+        </div>
+        <div className='scroll-section'>
+          <Testimonials />
+        </div>
       </div>
       
-      {/* Stats Section */}
-      <div className='bg-slate-900 py-24 text-white'>
-          <div className='max-w-7xl mx-auto px-4'>
-              <div className='grid grid-cols-2 md:grid-cols-4 gap-12 text-center'>
-                  <div>
-                      <h3 className='text-5xl font-black mb-2 text-indigo-400'>10K+</h3>
-                      <p className='text-slate-400 font-bold text-xs uppercase tracking-[0.2em]'>Active Jobs</p>
-                  </div>
-                  <div>
-                      <h3 className='text-5xl font-black mb-2 text-indigo-400'>3K+</h3>
-                      <p className='text-slate-400 font-bold text-xs uppercase tracking-[0.2em]'>Verified Companies</p>
-                  </div>
-                  <div>
-                      <h3 className='text-5xl font-black mb-2 text-indigo-400'>95%</h3>
-                      <p className='text-slate-400 font-bold text-xs uppercase tracking-[0.2em]'>Success Rate</p>
-                  </div>
-                  <div>
-                      <h3 className='text-5xl font-black mb-2 text-indigo-400'>24/7</h3>
-                      <p className='text-slate-400 font-bold text-xs uppercase tracking-[0.2em]'>AI Support</p>
-                  </div>
-              </div>
-          </div>
-      </div>
-
       <Footer />
     </div>
   )

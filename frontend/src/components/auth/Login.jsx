@@ -29,6 +29,10 @@ const Login = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        if (!input.email || !input.password || !input.role) {
+            toast.error("All fields are required");
+            return;
+        }
         try {
             dispatch(setLoading(true));
             const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
@@ -44,7 +48,8 @@ const Login = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response?.data?.message || "An error occurred");
+            const errorMsg = error.response?.data?.message || "Invalid credentials or server error";
+            toast.error(errorMsg);
         } finally {
             dispatch(setLoading(false));
         }
