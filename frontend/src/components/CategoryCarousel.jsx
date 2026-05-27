@@ -29,41 +29,41 @@ const CategoryCarousel = () => {
     }
 
     return (
-        <div className='w-full max-w-7xl mx-auto my-20 px-4'>
+        <div className='w-full max-w-7xl mx-auto my-32 px-6'>
             <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className='text-center mb-12'
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className='text-center mb-20'
             >
-                <h2 className='text-[10px] font-black uppercase tracking-[0.4em] text-cyan-500 mb-4'>Categories</h2>
-                <h3 className='text-4xl font-black text-slate-900 tracking-tight'>Browse by Interest</h3>
+                <h2 className='text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-6'>Explore</h2>
+                <h3 className='text-5xl md:text-6xl font-bold text-white tracking-tighter'>Infinite Opportunities</h3>
             </motion.div>
             
-            <Carousel className="w-full relative">
-                <CarouselContent className="gap-6 px-4">
+            <Carousel className="w-full relative group">
+                <CarouselContent className="gap-8 px-4">
                     {category.map((cat, index) => (
-                        <CarouselItem key={index} className="md:basis-1/4 lg:basis-1/5 pl-0">
+                        <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5 pl-0">
                             <motion.div
-                                whileHover={{ y: -10 }}
-                                transition={{ duration: 0.3 }}
+                                whileHover={{ y: -10, scale: 1.02 }}
+                                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                             >
                                 <Button 
                                     onClick={() => searchJobHandler(cat)} 
-                                    variant="outline" 
-                                    className="w-full h-32 flex flex-col items-center justify-center gap-4 rounded-[2rem] border-slate-100 bg-white hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-slate-200"
+                                    className="w-full h-48 flex flex-col items-center justify-center gap-6 rounded-3xl border border-white/5 bg-zinc-900/50 backdrop-blur-3xl hover:bg-zinc-800 hover:border-white/10 transition-all duration-700 shadow-2xl"
                                 >
-                                    <div className='p-3 rounded-xl bg-slate-50 group-hover:bg-white/10 transition-colors'>
-                                        <Zap size={20} className='text-cyan-500' />
+                                    <div className='p-4 rounded-2xl bg-white/5 group-hover:bg-primary/20 transition-colors duration-500'>
+                                        <Zap size={24} className='text-primary' />
                                     </div>
-                                    <span className='font-black text-xs uppercase tracking-widest'>{cat}</span>
+                                    <span className='font-bold text-[10px] uppercase tracking-[0.2em] text-white/60 group-hover:text-white'>{cat}</span>
                                 </Button>
                             </motion.div>
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden md:flex -left-12 border-none bg-slate-50 hover:bg-white shadow-sm" />
-                <CarouselNext className="hidden md:flex -right-12 border-none bg-slate-50 hover:bg-white shadow-sm" />
+                <CarouselPrevious className="hidden md:flex -left-12 border-white/10 bg-zinc-900/50 backdrop-blur-3xl text-white hover:bg-white hover:text-black transition-all duration-500" />
+                <CarouselNext className="hidden md:flex -right-12 border-white/10 bg-zinc-900/50 backdrop-blur-3xl text-white hover:bg-white hover:text-black transition-all duration-500" />
             </Carousel>
         </div>
     )

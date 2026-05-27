@@ -39,19 +39,27 @@ const Testimonials = () => {
     const duplicatedTestimonials = [...testimonials, ...testimonials];
 
     return (
-        <div className='py-24 bg-white overflow-hidden'>
-            <div className='max-w-7xl mx-auto px-4 mb-16 text-center'>
-                <h2 className='text-4xl font-bold'>What Our <span className='text-[#6A38C2]'>Users Say</span></h2>
+        <div className='py-32 bg-black overflow-hidden'>
+            <div className='max-w-7xl mx-auto px-6 mb-24'>
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    <h2 className='text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-6'>Voices</h2>
+                    <h3 className='text-5xl md:text-6xl font-bold text-white tracking-tighter'>Global Resonance</h3>
+                </motion.div>
             </div>
 
             <div className='relative flex overflow-hidden'>
                 <motion.div
-                    className='flex gap-8'
+                    className='flex gap-12'
                     animate={{
                         x: ['0%', '-50%'],
                     }}
                     transition={{
-                        duration: 30,
+                        duration: 40,
                         ease: "linear",
                         repeat: Infinity,
                     }}
@@ -59,24 +67,23 @@ const Testimonials = () => {
                     {duplicatedTestimonials.map((item, index) => (
                         <div 
                             key={index} 
-                            className='flex-shrink-0 w-[450px] p-8 rounded-2xl bg-white border border-gray-100 shadow-xl shadow-gray-200/50 flex flex-col gap-6'
+                            className='flex-shrink-0 w-[500px] p-12 rounded-[3rem] bg-zinc-900/50 backdrop-blur-3xl border border-white/5 flex flex-col gap-10 hover:border-white/10 transition-colors duration-700 shadow-2xl'
                         >
                             <div className='relative'>
-                                <span className='text-6xl text-gray-100 font-serif leading-none absolute -top-4 -left-2'>"</span>
-                                <p className='text-gray-600 font-medium leading-relaxed relative z-10'>
-                                    {item.quote}
+                                <p className='text-xl text-white/60 font-medium leading-relaxed tracking-tight italic'>
+                                    "{item.quote}"
                                 </p>
                             </div>
                             
-                            <div className='flex items-center gap-4 mt-auto'>
+                            <div className='flex items-center gap-5 mt-auto pt-10 border-t border-white/5'>
                                 <img 
                                     src={item.avatar} 
-                                    className='w-12 h-12 rounded-full border-2 border-[#6A38C2]/10' 
+                                    className='w-12 h-12 rounded-2xl border border-white/10' 
                                     alt={item.name} 
                                 />
                                 <div>
-                                    <h4 className='font-bold text-gray-900'>{item.name}</h4>
-                                    <p className='text-gray-500 text-xs font-semibold uppercase tracking-wider'>{item.role}</p>
+                                    <h4 className='font-bold text-sm text-white'>{item.name}</h4>
+                                    <p className='text-white/20 text-[10px] font-bold uppercase tracking-widest mt-0.5'>{item.role}</p>
                                 </div>
                             </div>
                         </div>
