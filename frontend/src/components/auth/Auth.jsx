@@ -73,8 +73,9 @@ const Auth = () => {
                 toast.success(res.data.message);
             }
         } catch (error) {
-            console.log(error);
-            toast.error(error.response?.data?.message || (isLogin ? "Login failed" : "Registration failed"));
+            console.error("Auth Error:", error);
+            const errorMsg = error.response?.data?.message || (isLogin ? "Login failed" : "Registration failed");
+            toast.error(errorMsg);
         } finally {
             dispatch(setLoading(false));
         }

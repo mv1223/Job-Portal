@@ -17,8 +17,21 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOptions = {
-    origin:['http://localhost:5173', 'http://127.0.0.1:5173', 'https://job-portal-delta-coral.vercel.app', process.env.FRONTEND_URL].filter(Boolean),
-    credentials:true
+    origin: (origin, callback) => {
+        const allowedOrigins = [
+            'http://localhost:5173', 
+            'http://127.0.0.1:5173', 
+            'https://job-portal-delta-coral.vercel.app',
+            process.env.FRONTEND_URL
+        ].filter(Boolean);
+        
+        if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
 }
 
 app.use(cors(corsOptions));
