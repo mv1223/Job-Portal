@@ -11,7 +11,7 @@ export const register = async (req, res) => {
          
         if (!fullname || !email || !phoneNumber || !password || !role) {
             return res.status(400).json({
-                message: "Please fill all fields",
+                message: "Something is missing",
                 success: false
             });
         };
@@ -47,9 +47,9 @@ export const register = async (req, res) => {
             success: true
         });
     } catch (error) {
-        console.log(error);
+        console.log("Register Error:", error);
         return res.status(500).json({
-            message: "Internal server error",
+            message: error.message || "Internal server error",
             success: false
         });
     }
