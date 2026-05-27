@@ -180,9 +180,9 @@ const Signup = () => {
                             <div className='mt-8 space-y-6'>
                                 <div>
                                     <Label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1 block mb-4">Select Your Role</Label>
-                                    <RadioGroup className="flex items-center gap-4">
+                                    <div className="flex items-center gap-4">
                                         <div className="flex items-center space-x-2 bg-slate-50 px-6 py-4 rounded-2xl border border-slate-100 cursor-pointer hover:border-indigo-100 transition-all flex-1">
-                                            <Input
+                                            <input
                                                 type="radio"
                                                 name="role"
                                                 value="student"
@@ -193,7 +193,7 @@ const Signup = () => {
                                             <Label className="font-bold text-slate-600 cursor-pointer">Student</Label>
                                         </div>
                                         <div className="flex items-center space-x-2 bg-slate-50 px-6 py-4 rounded-2xl border border-slate-100 cursor-pointer hover:border-indigo-100 transition-all flex-1">
-                                            <Input
+                                            <input
                                                 type="radio"
                                                 name="role"
                                                 value="recruiter"
@@ -203,7 +203,7 @@ const Signup = () => {
                                             />
                                             <Label className="font-bold text-slate-600 cursor-pointer">Recruiter</Label>
                                         </div>
-                                    </RadioGroup>
+                                    </div>
                                 </div>
 
                                 <div className='space-y-2'>

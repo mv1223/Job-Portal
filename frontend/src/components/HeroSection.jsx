@@ -23,20 +23,22 @@ const HeroSection = () => {
                 <motion.div 
                     animate={{ 
                         scale: [1, 1.2, 1],
+                        rotate: [0, 90, 0],
                         x: [0, 50, 0],
                         y: [0, 30, 0]
                     }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                    className='absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-indigo-200/30 to-purple-200/30 blur-[80px]'
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className='absolute top-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-r from-indigo-200/40 via-purple-200/40 to-pink-200/40 blur-[100px]'
                 />
                 <motion.div 
                     animate={{ 
                         scale: [1, 1.3, 1],
+                        rotate: [0, -45, 0],
                         x: [0, -40, 0],
                         y: [0, 60, 0]
                     }}
-                    transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-                    className='absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-r from-blue-200/30 to-emerald-200/30 blur-[100px]'
+                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    className='absolute bottom-[-10%] right-[-5%] w-[700px] h-[700px] rounded-full bg-gradient-to-r from-blue-200/40 via-emerald-200/40 to-cyan-200/40 blur-[120px]'
                 />
                 
                 {/* Floating Job Journey Icons */}
@@ -80,10 +82,10 @@ const HeroSection = () => {
                     </motion.div>
                     
                     <motion.h1 
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.3, duration: 0.8 }}
-                        className='text-6xl md:text-7xl font-black leading-tight text-slate-900'
+                        initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                        className='text-6xl md:text-8xl font-black leading-[0.9] text-slate-900 tracking-tighter'
                     >
                         Search, Apply & <br />
                         Get Your <span className='text-transparent bg-clip-text bg-gradient-to-r from-[#6A38C2] to-[#9333ea]'>Dream Jobs</span>
