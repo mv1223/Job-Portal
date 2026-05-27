@@ -15,6 +15,7 @@ import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import AiTools from './components/AiTools'
+import AiRoadmap from './components/AiRoadmap'
 
 
 const appRouter = createBrowserRouter([
@@ -37,6 +38,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/ai-tools",
     element: <AiTools />
+  },
+  {
+    path: "/ai-roadmap",
+    element: <AiRoadmap />
   },
   {
     path: "/description/:id",
