@@ -3,6 +3,8 @@ import LatestJobCards from './LatestJobCards';
 import { useSelector } from 'react-redux'; 
 import { Button } from './ui/button';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const LatestJobs = () => {
     const {allJobs} = useSelector(store=>store.job);

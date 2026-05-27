@@ -4,6 +4,8 @@ import { Button } from './ui/button';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSearchedQuery } from '@/redux/jobSlice';
+import { Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const category = [
     "Design & Development",
