@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setSearchedQuery } from '@/redux/jobSlice';
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { Search, Briefcase, Zap, Trophy, TrendingUp, Target, Sparkles, Rocket, Star } from 'lucide-react'
+import { Search, MapPin, Briefcase, Zap, Trophy, TrendingUp, Target, Sparkles, Rocket, Star } from 'lucide-react'
 import gsap from 'gsap'
 import { Spotlight } from './ui/spotlight'
 import { GridBackground } from './ui/grid-background'
@@ -13,7 +13,6 @@ const HeroSection = () => {
     const [query, setQuery] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const words = "Search, Apply & Get Your Dream Jobs".split(" ");
     const containerRef = useRef(null);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -89,57 +88,73 @@ const HeroSection = () => {
                 <motion.div style={{ x: -mousePos.x * 1.8, y: mousePos.y * 1.8 }} className='absolute bottom-1/3 right-1/3 opacity-20'><Sparkles size={45} className='text-blue-500' /></motion.div>
             </div>
 
-            <div className='max-w-7xl mx-auto px-6 relative z-10 text-center'>
+            <div className='max-w-4xl mx-auto px-6 relative z-10 text-center'>
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    style={{ rotateX: -mousePos.y / 5, rotateY: mousePos.x / 5 }}
-                    className='flex flex-col items-center gap-10'
+                    className='flex flex-col items-center'
                 >
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className='inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl'
+                        className='inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#111] border border-[#2a2a2a] text-[12px] text-[#888] mb-8'
                     >
-                        <Sparkles className='h-4 w-4 text-cyan-400 animate-pulse' />
-                        <span className='text-[10px] font-black uppercase tracking-[0.4em] text-white/60'>The Future of Professional Growth</span>
+                        <div className='w-1.5 h-1.5 bg-[#22c55e] rounded-full' />
+                        <span>2,400+ new jobs added this week</span>
                     </motion.div>
                     
-                    <h1 className='text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] text-white'>
-                        {words.map((word, i) => (
-                            <span key={i} className='hero-title-word inline-block mr-4'>
-                                {word === "Dream" || word === "Jobs" ? (
-                                    <span className='text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600'>
-                                        {word}
-                                    </span>
-                                ) : word}
-                            </span>
-                        ))}
+                    <h1 className='text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] text-white mb-6'>
+                        Find work that<br />actually <em className='not-italic text-primary'>fits you</em>
                     </h1>
                     
-                    <p className='max-w-2xl text-white/40 font-medium text-lg leading-relaxed'>
-                        Experience the next generation of career development. 
-                        Powered by AI, designed for excellence.
+                    <p className='max-w-lg text-[#666] text-lg leading-relaxed mb-10'>
+                        Search through thousands of verified job listings from top companies. 
+                        Your next role is one search away.
                     </p>
 
-                    <div className='w-full max-w-2xl relative group'>
-                        <div className='absolute -inset-1 bg-gradient-to-r from-primary to-cyan-500 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200' />
-                        <div className='relative flex items-center bg-zinc-900/90 backdrop-blur-3xl border border-white/10 rounded-[2rem] p-2 pr-4 shadow-2xl'>
-                            <div className='flex items-center flex-1 px-6'>
-                                <Search className='h-5 w-5 text-white/20' />
+                    <div className='w-full max-w-2xl relative'>
+                        <div className='flex items-center bg-[#111] border border-[#2a2a2a] rounded-xl overflow-hidden shadow-2xl'>
+                            <div className='flex items-center flex-1 px-4'>
+                                <Search className='h-4 w-4 text-[#444] shrink-0' />
                                 <input
                                     type="text"
-                                    placeholder='Search for titles, companies, or skills...'
+                                    placeholder='Job title, keyword or company...'
                                     onChange={(e) => setQuery(e.target.value)}
-                                    className='w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-white/20 px-4 py-4 font-medium'
+                                    className='w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-[#444] px-4 py-4 text-[14px]'
+                                />
+                            </div>
+                            <div className='w-[1px] h-6 bg-[#2a2a2a]' />
+                            <div className='flex items-center flex-1 px-4'>
+                                <MapPin className='h-4 w-4 text-[#444] shrink-0' />
+                                <input
+                                    type="text"
+                                    placeholder='Location or Remote'
+                                    className='w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-[#444] px-4 py-4 text-[14px]'
                                 />
                             </div>
                             <Button 
                                 onClick={searchJobHandler}
-                                className='bg-primary hover:bg-primary/90 text-white rounded-2xl px-8 py-6 font-bold shadow-xl shadow-primary/20 transition-all duration-300 hover:scale-105 active:scale-95'
+                                className='bg-primary hover:bg-primary/90 text-white rounded-lg px-6 py-2 h-auto m-1 font-semibold text-[13px] transition-all'
                             >
-                                Discover
+                                Search Jobs
                             </Button>
+                        </div>
+                    </div>
+
+                    <div className='flex items-center justify-center gap-8 md:gap-12 mt-12'>
+                        <div className='text-center'>
+                            <strong className='block text-2xl font-bold text-white tracking-tight'>84,500+</strong>
+                            <span className='text-[12px] text-[#555]'>Active Jobs</span>
+                        </div>
+                        <div className='w-[1px] h-8 bg-[#1e1e1e]' />
+                        <div className='text-center'>
+                            <strong className='block text-2xl font-bold text-white tracking-tight'>12,000+</strong>
+                            <span className='text-[12px] text-[#555]'>Companies Hiring</span>
+                        </div>
+                        <div className='w-[1px] h-8 bg-[#1e1e1e]' />
+                        <div className='text-center'>
+                            <strong className='block text-2xl font-bold text-white tracking-tight'>1.4M+</strong>
+                            <span className='text-[12px] text-[#555]'>Candidates Placed</span>
                         </div>
                     </div>
                 </motion.div>

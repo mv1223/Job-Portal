@@ -36,40 +36,35 @@ const CategoryCarousel = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className='text-center mb-20'
+                className='text-center mb-16'
             >
-                <h2 className='text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-6'>Explore</h2>
+                <h2 className='text-[11px] font-bold uppercase tracking-[0.5em] text-primary mb-4'>Explore</h2>
                 <h3 className='text-5xl md:text-6xl font-bold text-white tracking-tighter'>Infinite Opportunities</h3>
             </motion.div>
             
             <Carousel className="w-full relative group">
-                <CarouselContent className="gap-8 px-4">
+                <CarouselContent className="gap-6 px-4">
                     {category.map((cat, index) => (
                         <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5 pl-0">
-                            <TiltCard>
-                                <motion.div
-                                    whileHover={{ scale: 1.02 }}
-                                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                            <motion.div
+                                whileHover={{ y: -5 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <Button 
+                                    onClick={() => searchJobHandler(cat.name)} 
+                                    className="w-full h-40 flex flex-col items-center justify-center gap-4 rounded-2xl border border-[#1a1a1a] bg-[#0e0e0e] hover:bg-[#111] hover:border-primary transition-all duration-300 group/card shadow-none"
                                 >
-                                    <Button 
-                                        onClick={() => searchJobHandler(cat.name)} 
-                                        className="w-full h-48 flex flex-col items-center justify-center gap-6 rounded-3xl border border-white/5 bg-zinc-900/50 backdrop-blur-3xl hover:bg-zinc-800/80 hover:border-primary/50 transition-all duration-700 shadow-2xl relative overflow-hidden group/card"
-                                    >
-                                        <div className='p-4 rounded-2xl bg-white/5 group-hover/card:bg-primary/20 transition-colors duration-500 relative z-10'>
-                                            <cat.icon size={24} className='text-primary' />
-                                        </div>
-                                        <span className='font-bold text-[10px] uppercase tracking-[0.2em] text-white/60 group-hover/card:text-white relative z-10'>{cat.name}</span>
-                                        
-                                        {/* Animated Background Gradient */}
-                                        <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700" />
-                                    </Button>
-                                </motion.div>
-                            </TiltCard>
+                                    <div className='p-3 rounded-xl bg-[#161616] border border-[#222] group-hover/card:bg-primary/10 group-hover/card:border-primary/20 transition-all'>
+                                        <cat.icon size={20} className='text-primary' />
+                                    </div>
+                                    <span className='font-bold text-[11px] uppercase tracking-widest text-[#555] group-hover/card:text-white transition-colors'>{cat.name}</span>
+                                </Button>
+                            </motion.div>
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden md:flex -left-12 border-white/10 bg-zinc-900/50 backdrop-blur-3xl text-white hover:bg-white hover:text-black transition-all duration-500" />
-                <CarouselNext className="hidden md:flex -right-12 border-white/10 bg-zinc-900/50 backdrop-blur-3xl text-white hover:bg-white hover:text-black transition-all duration-500" />
+                <CarouselPrevious className="hidden md:flex -left-6 border-[#1a1a1a] bg-[#0e0e0e] text-white hover:bg-white hover:text-black transition-all" />
+                <CarouselNext className="hidden md:flex -right-6 border-[#1a1a1a] bg-[#0e0e0e] text-white hover:bg-white hover:text-black transition-all" />
             </Carousel>
         </div>
     )

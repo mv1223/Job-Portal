@@ -39,16 +39,13 @@ const Navbar = () => {
                 className='w-full max-w-5xl h-16 bg-zinc-900/50 backdrop-blur-3xl border border-white/5 rounded-2xl shadow-2xl px-8 flex items-center justify-between'
             >
                 <Link to="/" className='flex items-center gap-3 group'>
-                    <div className='w-8 h-8 bg-white rounded-lg flex items-center justify-center transition-transform group-hover:rotate-12'>
-                        <Briefcase className='text-black h-4 w-4' />
-                    </div>
                     <h1 className='text-xl font-bold tracking-tighter text-white'>
-                        Job<span className='text-primary'>Portal</span>
+                        Hire<span className='text-primary'>Sync</span>
                     </h1>
                 </Link>
                 
                 <div className='flex items-center gap-8'>
-                    <ul className='hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-white/40'>
+                    <ul className='hidden md:flex items-center gap-8 text-[12px] font-medium tracking-tight text-white/50'>
                         {
                             user && user.role === 'recruiter' ? (
                                 <>
@@ -57,15 +54,10 @@ const Navbar = () => {
                                 </>
                             ) : (
                                 <>
-                                    <li className='hover:text-white transition-colors'><Link to="/">Home</Link></li>
-                                    <li className='hover:text-white transition-colors'><Link to="/jobs">Jobs</Link></li>
-                                    <li className='hover:text-white transition-colors'><Link to="/browse">Browse</Link></li>
-                                    <li>
-                                        <Link to="/ai-roadmap" className="flex items-center gap-2 text-primary group">
-                                            <Sparkles className="w-3 h-3 animate-pulse" />
-                                            Roadmap
-                                        </Link>
-                                    </li>
+                                    <li className='hover:text-white transition-colors'><Link to="/">Find Jobs</Link></li>
+                                    <li className='hover:text-white transition-colors'><Link to="/jobs">Companies</Link></li>
+                                    <li className='hover:text-white transition-colors'><Link to="/browse">Salaries</Link></li>
+                                    <li className='hover:text-white transition-colors'><Link to="/">Career Advice</Link></li>
                                 </>
                             )
                         }
@@ -78,16 +70,12 @@ const Navbar = () => {
                             !user ? (
                                 <>
                                     <Link to="/login">
-                                        <MagneticButton>
-                                            <Button variant="ghost" className="font-bold text-[10px] uppercase tracking-widest text-white/60 hover:text-white">Sign In</Button>
-                                        </MagneticButton>
+                                        <Button variant="ghost" className="font-medium text-[13px] text-white/60 hover:text-white">Sign In</Button>
                                     </Link>
                                     <Link to="/signup">
-                                        <MagneticButton>
-                                            <Button className="bg-white hover:bg-white/90 text-black px-6 h-10 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all active:scale-95 shadow-xl shadow-white/10">
-                                                Join
-                                            </Button>
-                                        </MagneticButton>
+                                        <Button className="bg-primary hover:bg-primary/90 text-white px-5 h-9 rounded-md font-medium text-[13px] transition-all active:scale-95">
+                                            Post a Job
+                                        </Button>
                                     </Link>
                                 </>
                             ) : (

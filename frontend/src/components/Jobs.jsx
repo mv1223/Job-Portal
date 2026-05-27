@@ -28,37 +28,46 @@ const Jobs = () => {
     }, [allJobs, searchedQuery]);
 
     return (
-        <div className='bg-black min-h-screen'>
+        <div className='bg-[#0a0a0a] min-h-screen'>
             <Navbar />
             <div className='noise-bg' />
-            <div className='max-w-7xl mx-auto pt-32 px-6'>
-                <motion.div 
-                    initial={{ opacity: 0, scale: 1.2, filter: "blur(20px)" }}
-                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                    className='flex flex-col lg:flex-row gap-16 relative z-10'
-                >
-                    <div className='w-full lg:w-1/4'>
+            <div className='max-w-7xl mx-auto pt-32 px-6 pb-20 relative z-10'>
+                <div className='flex flex-col lg:grid lg:grid-cols-[260px_1fr] gap-12'>
+                    <aside className='sidebar'>
                         <FilterCard />
-                    </div>
-                    {
-                        filterJobs.length <= 0 ? (
-                            <div className='flex-1 flex flex-col items-center justify-center py-32 bg-zinc-900/30 rounded-[3rem] border border-dashed border-white/5'>
-                                <h2 className='text-2xl font-bold text-white/20 tracking-tighter'>No resonance found in the neural net.</h2>
-                                <p className='text-white/10 font-medium'>Adjust your search parameters.</p>
+                    </aside>
+                    
+                    <main className='jobs-column'>
+                        <div className='jobs-header flex items-center justify-between mb-8'>
+                            <div>
+                                <h2 className='text-[15px] font-bold text-white'>{filterJobs.length} open positions</h2>
+                                <p className='text-[12px] text-[#555] mt-1'>Showing results for India · Remote</p>
                             </div>
-                        ) : (
-                            <div className='flex-1 h-[80vh] overflow-y-auto pb-20 custom-scrollbar pr-4'>
-                                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+                            <select className='bg-[#111] border border-[#1e1e1e] text-[#888] px-3 py-1.5 rounded-md text-[12px] outline-none cursor-pointer'>
+                                <option>Most Relevant</option>
+                                <option>Newest First</option>
+                                <option>Salary: High to Low</option>
+                                <option>Best Match</option>
+                            </select>
+                        </div>
+
+                        {
+                            filterJobs.length <= 0 ? (
+                                <div className='flex flex-col items-center justify-center py-32 bg-[#0e0e0e] rounded-xl border border-dashed border-[#181818]'>
+                                    <h2 className='text-xl font-bold text-[#444] tracking-tight'>No positions found</h2>
+                                    <p className='text-[#333] text-sm mt-2'>Adjust your filters to see more results.</p>
+                                </div>
+                            ) : (
+                                <div className='flex flex-col gap-3'>
                                     {
                                         filterJobs.map((job, idx) => (
                                             <motion.div
-                                                initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
-                                                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
                                                 transition={{ 
-                                                    duration: 1, 
+                                                    duration: 0.5, 
                                                     delay: idx * 0.05,
-                                                    ease: [0.16, 1, 0.3, 1]
+                                                    ease: "easeOut"
                                                 }}
                                                 key={job?._id}>
                                                 <Job job={job} />
@@ -66,10 +75,10 @@ const Jobs = () => {
                                         ))
                                     }
                                 </div>
-                            </div>
-                        )
-                    }
-                </motion.div>
+                            )
+                        }
+                    </main>
+                </div>
             </div>
             <Footer />
         </div>
