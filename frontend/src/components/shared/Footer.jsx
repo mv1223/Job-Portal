@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Briefcase } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -55,6 +55,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

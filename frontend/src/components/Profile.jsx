@@ -3,7 +3,7 @@ import Navbar from './shared/Navbar'
 import Footer from './shared/Footer'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { Contact, Mail, Pen } from 'lucide-react'
+import { Contact, Mail, Pen, FileText, Download, Zap, BrainCircuit, Loader2, FileSpreadsheet } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { Label } from './ui/label'
 import AppliedJobTable from './AppliedJobTable'
@@ -13,7 +13,7 @@ import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
-import { Loader2, Zap, BrainCircuit } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const isResume = true;
 
@@ -24,8 +24,32 @@ const Profile = () => {
     const [atsData, setAtsData] = useState(null);
     const [matching, setMatching] = useState(false);
     const [matchedJobs, setMatchedJobs] = useState([]);
+    const [downloading, setDownloading] = useState(false);
     
     const { user } = useSelector(store => store.auth);
+
+    const downloadUserReport = async () => {
+        try {
+            setDownloading(true);
+            const response = await axios.get(`${USER_API_END_POINT}/export`, {
+                withCredentials: true,
+                responseType: 'blob',
+            });
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'users_report.csv');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            toast.success("User report downloaded successfully!");
+        } catch (error) {
+            console.log(error);
+            toast.error("Failed to download report");
+        } finally {
+            setDownloading(false);
+        }
+    }
 
     const analyzeResumeHandler = async () => {
         try {
@@ -93,14 +117,14 @@ const Profile = () => {
                         }
                     </div>
                 </div>
-                <div className='grid w-full max-w-sm items-center gap-2 mb-8'>
+                <div className='grid w-full max-sm items-center gap-2 mb-8'>
                     <Label className="text-sm font-bold uppercase tracking-widest text-slate-400">Resume</Label>
                     {
                         user?.profile?.resume ? <a target='blank' href={user?.profile?.resume} className='text-indigo-600 font-bold hover:underline flex items-center gap-2'><FileText size={18} /> {user?.profile?.resumeOriginalName}</a> : <span className='text-slate-400'>No resume uploaded</span>
                     }
                 </div>
 
-                <div className='flex gap-4 border-t border-slate-50 pt-8'>
+                <div className='flex flex-wrap gap-4 border-t border-slate-50 pt-8'>
                     <Button 
                         onClick={analyzeResumeHandler} 
                         disabled={analyzing}
@@ -118,6 +142,17 @@ const Profile = () => {
                         {matching ? <Loader2 className='animate-spin' /> : <BrainCircuit size={20} />}
                         AI Job Match
                     </Button>
+                    
+                    {user?.role === 'recruiter' && (
+                        <Button 
+                            onClick={downloadUserReport} 
+                            disabled={downloading}
+                            className="bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-100 px-8 py-6 rounded-2xl font-bold flex items-center gap-3 transition-all active:scale-95 ml-auto"
+                        >
+                            {downloading ? <Loader2 className='animate-spin' /> : <FileSpreadsheet size={20} />}
+                            Export Users (Excel)
+                        </Button>
+                    )}
                 </div>
 
                 {atsData && (
@@ -180,6 +215,5 @@ const Profile = () => {
             <Footer />
         </div>
     )
-}
 
 export default Profile

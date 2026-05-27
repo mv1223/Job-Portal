@@ -90,13 +90,18 @@ export const login = async (req, res) => {
         }
         const token = await jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
 
+        // Update last login
+        user.lastLogin = new Date();
+        await user.save();
+
         user = {
             _id: user._id,
             fullname: user.fullname,
             email: user.email,
             phoneNumber: user.phoneNumber,
             role: user.role,
-            profile: user.profile
+            profile: user.profile,
+            lastLogin: user.lastLogin
         }
 
         return res.status(200).cookie("token", token, { 
@@ -200,6 +205,40 @@ export const updateProfile = async (req, res) => {
     }
 }
 
+export const exportUsers = async (req, res) => {
+    try {
+        const users = await User.find({}).select("-password");
+        
+        if (!users || users.length === 0) {
+            return res.status(404).json({
+                message: "No users found",
+                success: false
+            });
+        }
+
+        // CSV Header
+        let csv = "ID,Full Name,Email,Phone Number,Role,Bio,Skills,Last Login,Created At\n";
+
+        // CSV Data
+        users.forEach(user => {
+            const skills = user.profile.skills ? user.profile.skills.join("; ") : "";
+            const bio = user.profile.bio ? user.profile.bio.replace(/,/g, " ") : ""; // Remove commas to avoid CSV break
+            csv += `${user._id},${user.fullname},${user.email},${user.phoneNumber},${user.role},"${bio}","${skills}",${user.lastLogin},${user.createdAt}\n`;
+        });
+
+        res.header('Content-Type', 'text/csv');
+        res.attachment('users_report.csv');
+        return res.status(200).send(csv);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Error exporting users",
+            success: false
+        });
+    }
+}
+
 export const analyzeResume = async (req, res) => {
     try {
         const userId = req.id;
@@ -235,11 +274,6 @@ export const analyzeResume = async (req, res) => {
             feedback,
             keywordsMatched: foundKeywords,
             fileName: fileName
-        });
-    } catch (error) {
-            feedback,
-            skillsAnalyzed: userSkills.length,
-            keywordsMatched: foundKeywords
         });
     } catch (error) {
         console.log(error);

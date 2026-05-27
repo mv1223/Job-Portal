@@ -6,11 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import { setSearchedQuery } from '@/redux/jobSlice';
 
 const category = [
-    "Frontend Developer",
-    "Backend Developer",
+    "Design & Development",
+    "Human Research",
+    "Finance Management",
+    "Customer Support",
+    "Project Management",
+    "Marketing & Sales",
     "Data Science",
-    "Graphic Designer",
-    "FullStack Developer"
+    "DevOps",
+    "Cybersecurity"
 ]
 
 const CategoryCarousel = () => {
@@ -23,34 +27,43 @@ const CategoryCarousel = () => {
     }
 
     return (
-        <div className='my-20 max-w-7xl mx-auto px-4'>
-            <Carousel className="w-full">
-                <div className='flex items-center justify-between mb-10'>
-                    <div>
-                        <h2 className='text-3xl font-black text-slate-900'>Explore by <span className='text-indigo-600'>Category</span></h2>
-                        <p className='text-slate-500 font-medium mt-1'>Find your specialty among 1,000+ active listings</p>
-                    </div>
-                    <div className='flex gap-2'>
-                        <CarouselPrevious className="static translate-y-0 h-10 w-10 border-slate-200 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" />
-                        <CarouselNext className="static translate-y-0 h-10 w-10 border-slate-200 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600" />
-                    </div>
+        <div className='py-24 bg-slate-50/50'>
+            <div className='max-w-7xl mx-auto px-4'>
+                <div className='text-center mb-16'>
+                    <h2 className='text-4xl font-black text-slate-900 mb-4'>Explore Careers Across Every Field</h2>
+                    <p className='text-slate-500 font-medium'>Discover a wide range of career opportunities across every industry.</p>
                 </div>
-                <CarouselContent className="-ml-4">
-                    {
-                        category.map((cat, index) => (
-                            <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/5">
-                                <Button 
-                                    onClick={() => searchJobHandler(cat)} 
-                                    variant="outline" 
-                                    className="w-full h-16 rounded-2xl border-slate-100 bg-white shadow-sm hover:border-indigo-200 hover:bg-indigo-50/50 hover:shadow-indigo-100 transition-all font-bold text-slate-700"
-                                >
-                                    {cat}
-                                </Button>
-                            </CarouselItem>
-                        ))
-                    }
-                </CarouselContent>
-            </Carousel>
+                
+                <Carousel className="w-full">
+                    <CarouselContent className="-ml-4">
+                        {
+                            category.map((cat, index) => (
+                                <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                                    <motion.div
+                                        whileHover={{ y: -5 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        <Button 
+                                            onClick={() => searchJobHandler(cat)} 
+                                            variant="outline" 
+                                            className="w-full h-24 flex flex-col items-center justify-center gap-2 rounded-2xl border-slate-100 bg-white shadow-sm hover:border-indigo-200 hover:bg-white hover:shadow-xl hover:shadow-indigo-100/50 transition-all group p-4"
+                                        >
+                                            <div className='w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-600 transition-colors'>
+                                                <Zap className='h-5 w-5 text-indigo-600 group-hover:text-white transition-colors' />
+                                            </div>
+                                            <span className='font-bold text-slate-700 text-xs tracking-tight'>{cat}</span>
+                                        </Button>
+                                    </motion.div>
+                                </CarouselItem>
+                            ))
+                        }
+                    </CarouselContent>
+                    <div className='flex justify-center gap-4 mt-12'>
+                        <CarouselPrevious className="static translate-y-0 h-12 w-12 border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all shadow-sm" />
+                        <CarouselNext className="static translate-y-0 h-12 w-12 border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all shadow-sm" />
+                    </div>
+                </Carousel>
+            </div>
         </div>
     )
 }
