@@ -16,120 +16,126 @@ const HeroSection = () => {
         navigate("/browse");
     }
 
+    const words = "Search, Apply & Get Your Dream Jobs".split(" ");
+
     return (
-        <div className='relative overflow-hidden bg-white'>
-            {/* Animated Background Elements */}
-            <div className='absolute top-0 left-0 w-full h-full pointer-events-none'>
+        <div className='relative overflow-hidden bg-white min-h-[90vh] flex items-center justify-center'>
+            {/* Sui-inspired Background: Deep Blurs and Floating Orbs */}
+            <div className='absolute inset-0 pointer-events-none'>
                 <motion.div 
                     animate={{ 
+                        x: [0, 100, 0],
+                        y: [0, -50, 0],
                         scale: [1, 1.2, 1],
-                        rotate: [0, 90, 0],
-                        x: [0, 50, 0],
-                        y: [0, 30, 0]
                     }}
                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className='absolute top-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-r from-indigo-200/40 via-purple-200/40 to-pink-200/40 blur-[100px]'
+                    className='absolute top-[-10%] left-[-10%] w-[800px] h-[800px] rounded-full bg-[#E0F2FE]/50 blur-[120px]'
                 />
                 <motion.div 
                     animate={{ 
-                        scale: [1, 1.3, 1],
-                        rotate: [0, -45, 0],
-                        x: [0, -40, 0],
-                        y: [0, 60, 0]
+                        x: [0, -80, 0],
+                        y: [0, 100, 0],
+                        scale: [1, 1.1, 1],
                     }}
                     transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                    className='absolute bottom-[-10%] right-[-5%] w-[700px] h-[700px] rounded-full bg-gradient-to-r from-blue-200/40 via-emerald-200/40 to-cyan-200/40 blur-[120px]'
+                    className='absolute bottom-[-20%] right-[-10%] w-[900px] h-[900px] rounded-full bg-[#F5F3FF]/60 blur-[150px]'
                 />
                 
-                {/* Floating Job Journey Icons */}
-                <motion.div 
-                    animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
-                    transition={{ duration: 5, repeat: Infinity }}
-                    className='absolute top-[15%] right-[15%] p-4 bg-white rounded-2xl shadow-xl text-indigo-600 border border-indigo-50'
-                >
-                    <Search size={32} />
-                </motion.div>
-                <motion.div 
-                    animate={{ y: [0, 25, 0], rotate: [0, -15, 0] }}
-                    transition={{ duration: 7, repeat: Infinity }}
-                    className='absolute bottom-[20%] left-[10%] p-4 bg-white rounded-2xl shadow-xl text-emerald-600 border border-emerald-50'
-                >
-                    <Trophy size={32} />
-                </motion.div>
-                <motion.div 
-                    animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                    className='absolute top-[40%] left-[5%] text-purple-200'
-                >
-                    <Briefcase size={80} />
-                </motion.div>
+                {/* Sui-style Grid Pattern Overlay */}
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
             </div>
 
-            <div className='text-center relative z-10 py-24'>
+            <div className='max-w-7xl mx-auto px-6 relative z-10 text-center'>
                 <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className='flex flex-col gap-6'
+                    className='flex flex-col items-center gap-8'
                 >
                     <motion.div 
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className='mx-auto px-6 py-2 rounded-full bg-gradient-to-r from-orange-50 to-red-50 text-[#F83002] font-black text-xs uppercase tracking-[0.3em] border border-orange-100 shadow-sm'
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                        className='inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-slate-100 shadow-[0_10px_30px_rgba(0,0,0,0.04)]'
                     >
-                        No. 1 Job Hunt Website
+                        <span className='w-2 h-2 rounded-full bg-cyan-500 animate-pulse' />
+                        <span className='text-[10px] font-black uppercase tracking-[0.3em] text-slate-500'>The Future of Job Hunting</span>
                     </motion.div>
                     
-                    <motion.h1 
-                        initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
-                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-                        className='text-6xl md:text-8xl font-black leading-[0.9] text-slate-900 tracking-tighter'
-                    >
-                        Search, Apply & <br />
-                        Get Your <span className='text-transparent bg-clip-text bg-gradient-to-r from-[#6A38C2] to-[#9333ea]'>Dream Jobs</span>
-                    </motion.h1>
+                    <h1 className='text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] text-slate-900'>
+                        {words.map((word, i) => (
+                            <motion.span
+                                key={i}
+                                initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+                                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                                transition={{ 
+                                    duration: 0.8, 
+                                    delay: i * 0.1,
+                                    ease: [0.21, 1.11, 0.81, 0.99]
+                                }}
+                                className='inline-block mr-4'
+                            >
+                                {word === "Dream" || word === "Jobs" ? (
+                                    <span className='text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-indigo-500 to-purple-600'>
+                                        {word}
+                                    </span>
+                                ) : word}
+                            </motion.span>
+                        ))}
+                    </h1>
                     
                     <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                        className='text-slate-500 max-w-2xl mx-auto text-lg font-medium leading-relaxed'
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8, duration: 0.8 }}
+                        className='text-xl text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed tracking-tight'
                     >
-                        Your career journey starts here. From searching to landing your dream role, we provide the AI-powered tools to make your professional dreams a reality.
+                        Experience a seamless, AI-driven journey to your next career milestone. Built for speed, precision, and your success.
                     </motion.p>
                     
                     <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.7 }}
-                        className='flex w-full max-w-2xl shadow-[0_20px_50px_rgba(106,56,194,0.15)] border-4 border-white pl-6 rounded-full items-center gap-4 mx-auto bg-white h-20'
+                        transition={{ delay: 1, duration: 0.8 }}
+                        className='w-full max-w-3xl relative group mt-4'
                     >
-                        <Search className='text-slate-400' size={24} />
-                        <input
-                            type="text"
-                            placeholder='Find your dream jobs'
-                            onChange={(e) => setQuery(e.target.value)}
-                            className='outline-none border-none w-full font-bold text-lg text-slate-900 placeholder:text-slate-300'
-                        />
-                        <Button 
-                            onClick={searchJobHandler} 
-                            className="rounded-full bg-gradient-to-r from-[#6A38C2] to-[#9333ea] hover:scale-105 transition-all duration-300 h-16 px-10 mr-1 shadow-lg shadow-purple-200"
-                        >
-                            <Search className='h-6 w-6' />
-                        </Button>
+                        <div className='absolute -inset-1 bg-gradient-to-r from-cyan-400 to-indigo-600 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000' />
+                        <div className='relative flex items-center p-2 bg-white rounded-full border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.06)]'>
+                            <div className='flex-1 flex items-center gap-4 pl-8'>
+                                <Search className='text-cyan-500' size={24} />
+                                <input
+                                    type="text"
+                                    placeholder='Search for roles, skills, or companies...'
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    className='w-full bg-transparent outline-none border-none text-xl font-bold text-slate-900 placeholder:text-slate-300'
+                                />
+                            </div>
+                            <Button 
+                                onClick={searchJobHandler} 
+                                className="h-16 px-12 rounded-full bg-slate-900 hover:bg-black text-white font-black text-lg transition-all active:scale-95 shadow-xl"
+                            >
+                                Discover
+                            </Button>
+                        </div>
                     </motion.div>
 
                     <motion.div 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 1 }}
-                        className='flex items-center justify-center gap-8 mt-4 text-slate-400 font-bold text-[10px] uppercase tracking-widest'
+                        transition={{ delay: 1.5 }}
+                        className='flex gap-12 mt-8'
                     >
-                        <div className='flex items-center gap-2'><Zap size={14} className='text-amber-500' /> Fast Response</div>
-                        <div className='flex items-center gap-2'><TrendingUp size={14} className='text-emerald-500' /> Career Growth</div>
-                        <div className='flex items-center gap-2'><Target size={14} className='text-blue-500' /> Precise Matching</div>
+                        {[
+                            { label: "Trusted by", val: "500+ Companies", icon: <Trophy className='text-amber-400' /> },
+                            { label: "Success rate", val: "98% Match", icon: <Target className='text-cyan-500' /> }
+                        ].map((item, idx) => (
+                            <div key={idx} className='flex items-center gap-4'>
+                                <div className='p-3 rounded-2xl bg-slate-50 border border-slate-100'>{item.icon}</div>
+                                <div className='text-left'>
+                                    <p className='text-[10px] font-black uppercase tracking-widest text-slate-400'>{item.label}</p>
+                                    <p className='text-sm font-black text-slate-900'>{item.val}</p>
+                                </div>
+                            </div>
+                        ))}
                     </motion.div>
                 </motion.div>
             </div>

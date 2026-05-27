@@ -20,20 +20,46 @@ const Home = () => {
     }
   }, []);
   return (
-    <div className='bg-white overflow-hidden'>
+    <div className='bg-white overflow-hidden selection:bg-cyan-100 selection:text-cyan-900'>
       <Navbar />
-      <div className='space-y-0'>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
         <HeroSection />
-        <div className='bg-gradient-to-b from-white to-slate-50 py-10'>
-          <CategoryCarousel />
-        </div>
-        <div className='bg-white py-10'>
-          <LatestJobs />
-        </div>
-        <div className='bg-slate-50 py-10'>
-          <Testimonials />
-        </div>
-      </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className='relative'
+      >
+        {/* Subtle background glow for section transition */}
+        <div className='absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-transparent via-cyan-50/30 to-transparent pointer-events-none' />
+        <CategoryCarousel />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <LatestJobs />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className='bg-slate-50/30'
+      >
+        <Testimonials />
+      </motion.div>
       
       {/* Stats Section */}
       <div className='bg-slate-900 py-24 text-white'>

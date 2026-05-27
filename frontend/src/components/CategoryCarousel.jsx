@@ -29,43 +29,42 @@ const CategoryCarousel = () => {
     }
 
     return (
-        <div className='py-24 bg-slate-50/50'>
-            <div className='max-w-7xl mx-auto px-4'>
-                <div className='text-center mb-16'>
-                    <h2 className='text-4xl font-black text-slate-900 mb-4'>Explore Careers Across Every Field</h2>
-                    <p className='text-slate-500 font-medium'>Discover a wide range of career opportunities across every industry.</p>
-                </div>
-                
-                <Carousel className="w-full">
-                    <CarouselContent className="-ml-4">
-                        {
-                            category.map((cat, index) => (
-                                <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
-                                    <motion.div
-                                        whileHover={{ y: -5 }}
-                                        transition={{ duration: 0.2 }}
-                                    >
-                                        <Button 
-                                            onClick={() => searchJobHandler(cat)} 
-                                            variant="outline" 
-                                            className="w-full h-24 flex flex-col items-center justify-center gap-2 rounded-2xl border-slate-100 bg-white shadow-sm hover:border-indigo-200 hover:bg-white hover:shadow-xl hover:shadow-indigo-100/50 transition-all group p-4"
-                                        >
-                                            <div className='w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-600 transition-colors'>
-                                                <Zap className='h-5 w-5 text-indigo-600 group-hover:text-white transition-colors' />
-                                            </div>
-                                            <span className='font-bold text-slate-700 text-xs tracking-tight'>{cat}</span>
-                                        </Button>
-                                    </motion.div>
-                                </CarouselItem>
-                            ))
-                        }
-                    </CarouselContent>
-                    <div className='flex justify-center gap-4 mt-12'>
-                        <CarouselPrevious className="static translate-y-0 h-12 w-12 border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all shadow-sm" />
-                        <CarouselNext className="static translate-y-0 h-12 w-12 border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all shadow-sm" />
-                    </div>
-                </Carousel>
-            </div>
+        <div className='w-full max-w-7xl mx-auto my-20 px-4'>
+            <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className='text-center mb-12'
+            >
+                <h2 className='text-[10px] font-black uppercase tracking-[0.4em] text-cyan-500 mb-4'>Categories</h2>
+                <h3 className='text-4xl font-black text-slate-900 tracking-tight'>Browse by Interest</h3>
+            </motion.div>
+            
+            <Carousel className="w-full relative">
+                <CarouselContent className="gap-6 px-4">
+                    {category.map((cat, index) => (
+                        <CarouselItem key={index} className="md:basis-1/4 lg:basis-1/5 pl-0">
+                            <motion.div
+                                whileHover={{ y: -10 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <Button 
+                                    onClick={() => searchJobHandler(cat)} 
+                                    variant="outline" 
+                                    className="w-full h-32 flex flex-col items-center justify-center gap-4 rounded-[2rem] border-slate-100 bg-white hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-slate-200"
+                                >
+                                    <div className='p-3 rounded-xl bg-slate-50 group-hover:bg-white/10 transition-colors'>
+                                        <Zap size={20} className='text-cyan-500' />
+                                    </div>
+                                    <span className='font-black text-xs uppercase tracking-widest'>{cat}</span>
+                                </Button>
+                            </motion.div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious className="hidden md:flex -left-12 border-none bg-slate-50 hover:bg-white shadow-sm" />
+                <CarouselNext className="hidden md:flex -right-12 border-none bg-slate-50 hover:bg-white shadow-sm" />
+            </Carousel>
         </div>
     )
 }

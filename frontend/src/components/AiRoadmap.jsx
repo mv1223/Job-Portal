@@ -68,41 +68,63 @@ const AiRoadmap = () => {
     };
 
     return (
-        <div className='min-h-screen bg-[#FDFCFD]'>
+        <div className='min-h-screen bg-white selection:bg-cyan-100 selection:text-cyan-900'>
             <Navbar />
-            <div className='max-w-7xl mx-auto px-4 py-20'>
+            <div className='max-w-7xl mx-auto px-6 py-32 relative'>
+                {/* Sui-style Background Blurs */}
+                <div className='absolute inset-0 pointer-events-none overflow-hidden'>
+                    <div className='absolute top-0 right-[-10%] w-[600px] h-[600px] rounded-full bg-cyan-50/40 blur-[100px]' />
+                    <div className='absolute bottom-0 left-[-10%] w-[600px] h-[600px] rounded-full bg-indigo-50/40 blur-[100px]' />
+                </div>
+
                 <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className='text-center mb-16'
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    className='text-center mb-24 relative z-10'
                 >
-                    <div className='inline-flex items-center gap-2 bg-indigo-50 px-4 py-2 rounded-full mb-6'>
-                        <Sparkles className='h-4 w-4 text-indigo-600' />
-                        <span className='text-sm font-semibold text-indigo-700 uppercase tracking-wider'>Powered by Gemini AI</span>
-                    </div>
-                    <h1 className='text-6xl font-black text-slate-900 mb-6'>AI Career <span className='text-indigo-600'>Roadmap</span></h1>
-                    <p className='text-xl text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed'>
-                        Tell us your dream role, and our AI will craft a personalized step-by-step path to help you achieve it.
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className='inline-flex items-center gap-3 bg-white px-6 py-2 rounded-full border border-slate-100 shadow-sm mb-8'
+                    >
+                        <Sparkles className='h-4 w-4 text-cyan-500' />
+                        <span className='text-[10px] font-black uppercase tracking-[0.3em] text-slate-500'>Sui-Powered Career Intelligence</span>
+                    </motion.div>
+                    <h1 className='text-7xl md:text-9xl font-black text-slate-900 mb-8 tracking-tighter leading-none'>
+                        AI Career <br />
+                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-indigo-600'>Roadmap</span>
+                    </h1>
+                    <p className='text-xl text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed tracking-tight'>
+                        Define your destination. Our AI architects the most efficient path to your career goals.
                     </p>
                 </motion.div>
 
-                <div className='max-w-3xl mx-auto mb-20'>
-                    <div className='relative flex items-center p-2 bg-white rounded-[2rem] border border-slate-200 shadow-xl group hover:border-indigo-200 transition-all duration-500'>
-                        <Input 
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                            placeholder="e.g. I want to become an AI Engineer" 
-                            className='flex-1 border-none shadow-none text-lg font-bold h-16 pl-8 focus-visible:ring-0 placeholder:text-slate-300'
-                        />
-                        <Button 
-                            onClick={generateRoadmap}
-                            disabled={generating || !role}
-                            className='h-14 px-10 rounded-[1.5rem] bg-indigo-600 hover:bg-indigo-700 text-white font-black text-lg transition-all active:scale-95'
-                        >
-                            {generating ? <BrainCircuit className='animate-spin mr-2' /> : <Target className='mr-2' />}
-                            {generating ? "Crafting..." : "Generate"}
-                        </Button>
-                    </div>
+                <div className='max-w-4xl mx-auto mb-32 relative z-10'>
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className='relative group'
+                    >
+                        <div className='absolute -inset-1 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-[2.5rem] blur opacity-10 group-hover:opacity-30 transition duration-1000' />
+                        <div className='relative flex items-center p-3 bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50'>
+                            <Input 
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                placeholder="What's your dream role? (e.g. AI Engineer)" 
+                                className='flex-1 border-none shadow-none text-xl font-bold h-16 pl-8 focus-visible:ring-0 placeholder:text-slate-300'
+                            />
+                            <Button 
+                                onClick={generateRoadmap}
+                                disabled={generating || !role}
+                                className='h-16 px-12 rounded-[2rem] bg-slate-900 hover:bg-black text-white font-black text-lg transition-all active:scale-95 shadow-xl'
+                            >
+                                {generating ? <BrainCircuit className='animate-spin mr-3' /> : <Target className='mr-3' />}
+                                {generating ? "Mapping..." : "Generate Path"}
+                            </Button>
+                        </div>
+                    </motion.div>
                 </div>
 
                 <AnimatePresence>
@@ -110,56 +132,57 @@ const AiRoadmap = () => {
                         <motion.div 
                             initial={{ opacity: 0, y: 40 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className='grid grid-cols-1 lg:grid-cols-3 gap-10'
+                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                            className='grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10'
                         >
                             {/* Roadmap Steps */}
-                            <div className='lg:col-span-2 space-y-8'>
+                            <div className='lg:col-span-8 space-y-12'>
                                 {roadmap.steps.map((step, idx) => (
                                     <motion.div 
-                                        initial={{ opacity: 0, x: -20 }}
+                                        initial={{ opacity: 0, x: -30 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: idx * 0.1 }}
+                                        transition={{ delay: idx * 0.15 }}
                                         key={idx}
-                                        className='relative pl-12 group'
+                                        className='relative pl-20'
                                     >
                                         {idx !== roadmap.steps.length - 1 && (
-                                            <div className='absolute left-[23px] top-10 bottom-[-40px] w-1 bg-slate-100 group-hover:bg-indigo-100 transition-colors' />
+                                            <div className='absolute left-[31px] top-16 bottom-[-48px] w-[2px] bg-slate-100' />
                                         )}
-                                        <div className='absolute left-0 top-0 w-12 h-12 rounded-2xl bg-white border-4 border-indigo-50 flex items-center justify-center z-10 shadow-sm group-hover:border-indigo-600 group-hover:bg-indigo-600 transition-all duration-500'>
-                                            <span className='text-indigo-600 font-black group-hover:text-white'>{idx + 1}</span>
+                                        <div className='absolute left-0 top-0 w-16 h-16 rounded-3xl bg-white border border-slate-100 flex items-center justify-center z-10 shadow-xl shadow-slate-100 group hover:border-cyan-500 transition-colors duration-500'>
+                                            <span className='text-slate-900 font-black text-xl'>{idx + 1}</span>
                                         </div>
                                         
-                                        <div className='bg-white p-8 rounded-3xl border border-slate-100 shadow-sm group-hover:shadow-xl group-hover:border-indigo-100 transition-all duration-500'>
-                                            <div className='flex items-center justify-between mb-4'>
-                                                <h3 className='text-2xl font-black text-slate-900'>{step.title}</h3>
-                                                <div className='flex items-center gap-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider'>
+                                        <div className='bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-700 group'>
+                                            <div className='flex items-center justify-between mb-8'>
+                                                <h3 className='text-3xl font-black text-slate-900 tracking-tight group-hover:text-cyan-500 transition-colors'>{step.title}</h3>
+                                                <div className='flex items-center gap-2 text-cyan-600 bg-cyan-50 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest'>
                                                     <Clock size={14} />
                                                     {step.duration}
                                                 </div>
                                             </div>
-                                            <p className='text-slate-500 font-medium mb-6 leading-relaxed'>{step.desc}</p>
+                                            <p className='text-lg text-slate-400 font-medium mb-10 leading-relaxed'>{step.desc}</p>
                                             
-                                            <div className='grid md:grid-cols-2 gap-6'>
-                                                <div>
-                                                    <h4 className='text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 flex items-center gap-2'>
-                                                        <BookOpen size={12} /> Recommended Courses
+                                            <div className='grid md:grid-cols-2 gap-10'>
+                                                <div className='p-8 rounded-[2rem] bg-slate-50/50 border border-slate-100'>
+                                                    <h4 className='text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-2'>
+                                                        <BookOpen size={14} className='text-cyan-500' /> Learning Resources
                                                     </h4>
-                                                    <ul className='space-y-2'>
+                                                    <ul className='space-y-4'>
                                                         {step.courses.map((c, i) => (
-                                                            <li key={i} className='flex items-center gap-2 text-sm font-bold text-slate-700 hover:text-indigo-600 cursor-pointer transition-colors'>
-                                                                <ChevronRight size={14} className='text-indigo-400' />
+                                                            <li key={i} className='flex items-center gap-3 text-sm font-bold text-slate-700 hover:text-cyan-500 cursor-pointer transition-colors'>
+                                                                <ChevronRight size={16} className='text-cyan-300' />
                                                                 {c}
                                                             </li>
                                                         ))}
                                                     </ul>
                                                 </div>
-                                                <div>
-                                                    <h4 className='text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 flex items-center gap-2'>
-                                                        <CheckCircle2 size={12} /> Core Skills
+                                                <div className='p-8 rounded-[2rem] bg-slate-50/50 border border-slate-100'>
+                                                    <h4 className='text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-2'>
+                                                        <CheckCircle2 size={14} className='text-indigo-500' /> Mastered Skills
                                                     </h4>
-                                                    <div className='flex flex-wrap gap-2'>
+                                                    <div className='flex flex-wrap gap-3'>
                                                         {step.skills.map((s, i) => (
-                                                            <span key={i} className='px-3 py-1 bg-slate-50 text-slate-600 rounded-lg text-xs font-bold border border-slate-100'>
+                                                            <span key={i} className='px-4 py-2 bg-white text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest border border-slate-100 shadow-sm'>
                                                                 {s}
                                                             </span>
                                                         ))}
@@ -172,45 +195,49 @@ const AiRoadmap = () => {
                             </div>
 
                             {/* Summary Sidebar */}
-                            <div className='space-y-8'>
-                                <div className='bg-slate-900 p-8 rounded-[2.5rem] text-white sticky top-28'>
-                                    <div className='flex items-center gap-4 mb-8'>
-                                        <div className='w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center'>
-                                            <Rocket className='h-6 w-6' />
+                            <div className='lg:col-span-4'>
+                                <div className='bg-slate-900 p-10 rounded-[3.5rem] text-white sticky top-32 shadow-2xl shadow-indigo-900/20'>
+                                    <div className='flex items-center gap-5 mb-12'>
+                                        <div className='w-16 h-16 bg-gradient-to-br from-cyan-400 to-indigo-600 rounded-[1.5rem] flex items-center justify-center shadow-lg shadow-cyan-500/20'>
+                                            <Rocket className='h-8 w-8 text-white' />
                                         </div>
                                         <div>
-                                            <h3 className='text-xl font-black'>Path to Success</h3>
-                                            <p className='text-indigo-400 text-xs font-bold uppercase tracking-wider'>{roadmap.duration} Estimate</p>
+                                            <h3 className='text-2xl font-black tracking-tight'>Success Path</h3>
+                                            <p className='text-cyan-400 text-[10px] font-black uppercase tracking-[0.2em] mt-1'>{roadmap.duration} Plan</p>
                                         </div>
                                     </div>
                                     
-                                    <div className='space-y-6'>
+                                    <div className='space-y-10'>
                                         <div>
-                                            <div className='flex justify-between text-sm font-bold mb-2'>
-                                                <span className='text-slate-400 uppercase tracking-widest'>Progress tracking</span>
-                                                <span className='text-indigo-400'>0%</span>
+                                            <div className='flex justify-between text-[10px] font-black uppercase tracking-widest mb-4'>
+                                                <span className='text-slate-400'>Current Momentum</span>
+                                                <span className='text-cyan-400'>Preparing...</span>
                                             </div>
-                                            <div className='w-full bg-white/10 h-3 rounded-full overflow-hidden'>
-                                                <div className='w-0 h-full bg-indigo-500 rounded-full' />
+                                            <div className='w-full bg-white/5 h-4 rounded-full overflow-hidden border border-white/5'>
+                                                <motion.div 
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: '15%' }}
+                                                    className='h-full bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full' 
+                                                />
                                             </div>
                                         </div>
 
-                                        <div className='p-6 bg-white/5 rounded-2xl border border-white/5'>
-                                            <h4 className='text-sm font-black uppercase tracking-widest mb-4'>Quick Tips</h4>
-                                            <ul className='space-y-4'>
-                                                <li className='flex gap-3 text-sm text-slate-300 font-medium'>
-                                                    <CheckCircle2 size={18} className='text-indigo-500 shrink-0' />
-                                                    Consistency is more important than speed.
+                                        <div className='p-8 rounded-[2.5rem] bg-white/5 border border-white/10'>
+                                            <h4 className='text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-6'>Architect's Advice</h4>
+                                            <ul className='space-y-6'>
+                                                <li className='flex gap-4 text-sm text-slate-300 font-medium leading-relaxed'>
+                                                    <div className='w-6 h-6 rounded-lg bg-cyan-500/10 flex items-center justify-center shrink-0'><CheckCircle2 size={16} className='text-cyan-500' /></div>
+                                                    Build proof-of-work projects for every milestone.
                                                 </li>
-                                                <li className='flex gap-3 text-sm text-slate-300 font-medium'>
-                                                    <CheckCircle2 size={18} className='text-indigo-500 shrink-0' />
-                                                    Build one project for every step you complete.
+                                                <li className='flex gap-4 text-sm text-slate-300 font-medium leading-relaxed'>
+                                                    <div className='w-6 h-6 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0'><CheckCircle2 size={16} className='text-indigo-500' /></div>
+                                                    Network with architects in your target domain.
                                                 </li>
                                             </ul>
                                         </div>
 
-                                        <Button className='w-full h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black'>
-                                            Download Roadmap PDF
+                                        <Button className='w-full h-16 rounded-[2rem] bg-white hover:bg-slate-100 text-slate-900 font-black text-sm uppercase tracking-widest shadow-xl transition-all active:scale-95'>
+                                            Export Strategy
                                         </Button>
                                     </div>
                                 </div>
