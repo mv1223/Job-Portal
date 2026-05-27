@@ -57,7 +57,15 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <li className='hover:text-white transition-colors'><Link to="/">Home</Link></li>
-                                    <li className='hover:text-white transition-colors'><Link to="/jobs">Jobs</Link></li>
+                                    <li className='hover:text-white transition-colors'>
+                                        <motion.div
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.9, filter: "blur(4px)" }}
+                                            transition={{ duration: 0.2 }}
+                                        >
+                                            <Link to="/jobs">Jobs</Link>
+                                        </motion.div>
+                                    </li>
                                     <li className='hover:text-white transition-colors'><Link to="/browse">Browse</Link></li>
                                     <li><Link to="/ai-roadmap" className="text-primary">Roadmap</Link></li>
                                 </>

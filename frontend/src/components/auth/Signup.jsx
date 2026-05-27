@@ -34,6 +34,12 @@ const Signup = () => {
     }
     const submitHandler = async (e) => {
         e.preventDefault();
+        
+        if (!input.role) {
+            toast.error("Please select a role (Student or Recruiter)");
+            return;
+        }
+
         const formData = new FormData();
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
